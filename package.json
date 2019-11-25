@@ -1,0 +1,17 @@
+{
+  "name": "space-shooter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "space-invader.js",
+  "dependencies": {},
+  "devDependencies": {
+    "webpack": "4.41.2",
+    "webpack-cli": "3.3.10"
+  },
+  "scripts": {
+    "dev": "webpack --mode development --watch",
+    "build": "webpack --mode production --watch"
+  },
+  "author": "",
+  "license": "ISC"
+}
