@@ -1,5 +1,30 @@
-document.addEventListener('keydown', keyDownHandler);
-document.addEventListener('keyup', keyUpHandler);
+class Ship {
+    constructor(ctx, img, speed, config) {
+        this.setVars(ctx, img, speed, config);
+        this.setListeners();
+    }
+
+    setVars() {
+        this.ctx = ctx;
+        this.img = img;
+        this.speed = speed;
+        this.cfg = config;
+        this.x = 10;
+        this.y = this.cfg.h / 2;
+        this.w = 100;
+        this.h = 33;
+        this.rightPressed = false;
+        this.leftPressed = false;
+        this.upPressed = false;
+        this.downPressed = false;
+    }
+
+    setListeners() {
+        document.addEventListener('keydown', this.keyDownHandler.bind(this));
+        document.addEventListener('keyup', this.keyUpHandler.bind(this));
+    }
+}
+
 
 function keyDownHandler(e) {
     (e.key == 'Right' || e.key == 'ArrowRight') && (rightPressed = true);
@@ -15,11 +40,6 @@ function keyUpHandler(e) {
     (e.key == 'Down' || e.key == 'ArrowDown') && (downPressed = false);
 }
 
-let rightPressed = false;
-let leftPressed = false;
-let upPressed = false;
-let downPressed = false;
-
 function drawShip() {
     ctx.beginPath();
     ctx.drawImage(ship, shipx, shipy, 100, 33);
@@ -30,6 +50,3 @@ function drawShip() {
     downPressed &&  (shipy += 2);
    
 }
-
-let shipx = 10;
-//let shipy = canvas.height /2;
