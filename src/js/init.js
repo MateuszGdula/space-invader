@@ -1,4 +1,3 @@
-//import SI_VARS from "./SI_VARS";
 import {assets} from "./SI_VARS";
 import SpaceInvader from './SpaceInvader';
 

@@ -18,6 +18,7 @@ class Ship extends EventTarget {
         this.leftPressed = false;
         this.upPressed = false;
         this.downPressed = false;
+        this.reload = false;
     }
 
     setListeners() {
@@ -56,9 +57,14 @@ class Ship extends EventTarget {
         (this.upPressed && (this.y > 0)) && (this.y -= this.speed);
     }
 
-    shot(e) {
-        console.log('bang bang bang');
-        this.dispatchEvent(new Event('shot'))
+    shot() {
+        if(this.reload) return
+        let e  = new Event('shot');
+        e.x = this.x + this.w;
+        e.y = this.y + Math.round(this.h / 2);
+        this.dispatchEvent(e);
+        this.reload = true;
+        setTimeout(() => this.reload = false, 100);
     }
 }
 

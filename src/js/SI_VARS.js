@@ -8,5 +8,6 @@ export const config = {
 
 export const assets = {
     bg: "./assets/bg.png",
-    ship: "./assets/ship.png"
+    ship: "./assets/ship.png",
+    missle1: "./assets/missle1.png"
 }
