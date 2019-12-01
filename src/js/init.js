@@ -1,7 +1,7 @@
-import {assets} from "./SI_VARS";
+import {data, assets} from "./SI_VARS";
 import SpaceInvader from './SpaceInvader';
 
-async function assetsLoader(assets) {
+function assetsLoader(assets) {
     return new Promise((resolve, reject) => {
         let assetsNum = Object.keys(assets).length;
         const loadedAssets = {};
@@ -17,5 +17,9 @@ async function assetsLoader(assets) {
 }
 
 assetsLoader(assets).then(loadedAssets => {
-    const game = new SpaceInvader(loadedAssets);
+    const SI_GAME = {};
+    SI_GAME.assets = loadedAssets;
+    SI_GAME.data = data;
+    window.SI_GAME = SI_GAME;
+    new SpaceInvader();
 });

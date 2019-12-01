@@ -1,14 +1,13 @@
 class Missle extends EventTarget {
-    constructor(ctx, img, x, y, speed, config) {
+    constructor(ctx, img, x, y, speed) {
         super();
-        this.setVars(ctx, img, x, y, speed, config);
+        this.setVars(ctx, img, x, y, speed);
     }
 
-    setVars(ctx, img, x, y, speed, config) {
+    setVars(ctx, img, x, y, speed) {
         this.ctx = ctx;
         this.img = img;
         this.speed = speed;
-        this.cfg = config;
         this.x = x
         this.y = y
         this.w = 13;
@@ -19,17 +18,20 @@ class Missle extends EventTarget {
         this.ctx.beginPath();
         this.ctx.drawImage(this.img, this.x, this.y /* this.w, this.h */);
         this.ctx.closePath();
-        return this.update();
+        this.update();
     }
 
     update() {
         this.x += this.speed;
         if (
-            this.x + this.w > this.cfg.w ||
+            this.x + this.w > SI_GAME.data.w ||
             this.x < 0 ||
-            this.y + this.h > this.cfg.h ||
+            this.y + this.h > SI_GAME.data.h ||
             this.y < 0
-            ) return true;
+            ) {
+                let e = new Event('remove');
+                this.dispatchEvent(e);
+            }
     }
 }
 

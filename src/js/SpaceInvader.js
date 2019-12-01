@@ -1,30 +1,34 @@
-import { config } from "./SI_VARS";
 import Background from "./Background";
 import Ship from "./Ship";
 import Missle from './Missle';
+import AlienShip from './AlienShip';
 
 class SpaceInvader {
-    constructor(assets) {
-        this.setVars(assets);
+    constructor() {
+        this.setVars();
         this.setListeners();
         this.start();
     }
 
-    setVars(assets) {
-        this.assets = assets;
-        this.ctx = SI_CTX;
-        this.cfg = config;
-        this.bg = new Background(this.ctx, this.assets.bg, 0.5, this.cfg);
-        this.ship = new Ship(this.ctx, this.assets.ship, 2, this.cfg);
+    setVars() {
+        this.ctx = SI_GAME.data.ctx;
+        this.bg = new Background(this.ctx, SI_GAME.assets.bg, 0.5);
+        this.ship = new Ship(this.ctx, SI_GAME.assets.ship, 2, 100);
+        this.aliens = [];
         this.missles = [];
     }
 
     setListeners() {
-        this.ship.addEventListener('shot', e => this.missles.push(new Missle(this.ctx, this.assets.missle1, e.x, e.y, 4, this.cfg)));
+        this.handleShot = this.handleShot.bind(this);
+        this.ship.addEventListener('shot', this.handleShot);
     }
 
     start() {
         this.drawFrame();
+        let alien = new AlienShip(this.ctx, SI_GAME.assets.alien1, 1.2, 100, this.ship);
+        console.log(alien);
+        this.aliens.push(alien);
+        alien.addEventListener('shot', this.handleShot.bind(this));
     }
 
     pause() {
@@ -40,17 +44,24 @@ class SpaceInvader {
     }
 
     drawFrame() {
-        this.ctx.clearRect(0, 0, this.cfg.w, this.cfg.h);
+        this.ctx.clearRect(0, 0, SI_GAME.data.w, SI_GAME.data.h);
         this.bg.draw();
         this.ship.draw();
-        this.missles.forEach((missle, i) => {
-            let rmStatus = missle.draw();
-            if(rmStatus) {
-                this.missles.splice(i, 1);
-            };
-        });
+        this.missles.forEach(missle => missle.draw());
+        this.aliens.forEach(alien => alien.draw());
         
         requestAnimationFrame(() => this.drawFrame());
+    }
+
+    handleShot(e) {
+        let missle = new Missle(this.ctx, e.asset, e.x, e.y, e.speed, SI_GAME.data);
+        this.missles.push(missle);
+
+        let removeHandler = e => {
+            this.missles.splice(this.missles.indexOf(missle), 1);
+            missle.removeEventListener('remove', removeHandler);
+        }
+        missle.addEventListener('remove', removeHandler);
     }
 }
 

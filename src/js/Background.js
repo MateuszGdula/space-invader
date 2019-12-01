@@ -1,18 +1,17 @@
 class Background {
-    constructor(ctx, img, speed, config) {
+    constructor(ctx, asset, speed) {
         this.ctx = ctx;
-        this.img = img;
+        this.asset = asset;
         this.speed = speed;
-        this.cfg = config;
         this.x = 0;
     }
 
     draw() {
         this.ctx.beginPath();
-        this.ctx.drawImage(this.img, this.x, 0)
-        this.ctx.drawImage(this.img, this.x + this.cfg.w, 0)
+        this.ctx.drawImage(this.asset, this.x, 0)
+        this.ctx.drawImage(this.asset, this.x + SI_GAME.data.w, 0)
         this.ctx.closePath();
-        this.x > this.cfg.w * -1 ? this.x -= this.speed : this.x = 0;
+        this.x > SI_GAME.data.w * -1 ? this.x -= this.speed : this.x = 0;
     }
 }
 

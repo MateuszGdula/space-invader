@@ -1,17 +1,17 @@
 class Ship extends EventTarget {
-    constructor(ctx, img, speed, config) {
+    constructor(ctx, img, speed, health) {
         super();
-        this.setVars(ctx, img, speed, config);
+        this.setVars(ctx, img, speed, health);
         this.setListeners();
     }
 
-    setVars(ctx, img, speed, config) {
+    setVars(ctx, img, speed, health) {
         this.ctx = ctx;
         this.img = img;
         this.speed = speed;
-        this.cfg = config;
+        this.health = health;
         this.x = 10;
-        this.y = this.cfg.h / 2;
+        this.y = SI_GAME.data.h / 2;
         this.w = 100;
         this.h = 33;
         this.rightPressed = false;
@@ -19,6 +19,11 @@ class Ship extends EventTarget {
         this.upPressed = false;
         this.downPressed = false;
         this.reload = false;
+        this.weapon = {
+            asset: SI_GAME.assets.missle1,
+            damage: 20,
+            speed: 4
+        }
     }
 
     setListeners() {
@@ -51,9 +56,9 @@ class Ship extends EventTarget {
     }
 
     update() {
-        (this.rightPressed && (this.x + this.w < this.cfg.w)) && (this.x += this.speed);
+        (this.rightPressed && (this.x + this.w < SI_GAME.data.w)) && (this.x += this.speed);
         (this.leftPressed && ( this.x > 0)) && (this.x -= this.speed);
-        (this.downPressed && (this.y + this.h < this.cfg.h)) && (this.y += this.speed);
+        (this.downPressed && (this.y + this.h < SI_GAME.data.h)) && (this.y += this.speed);
         (this.upPressed && (this.y > 0)) && (this.y -= this.speed);
     }
 
@@ -62,6 +67,9 @@ class Ship extends EventTarget {
         let e  = new Event('shot');
         e.x = this.x + this.w;
         e.y = this.y + Math.round(this.h / 2);
+        e.asset = this.weapon.asset;
+        e.speed = this.weapon.speed;
+        e.dmg = this.weapon.damage;
         this.dispatchEvent(e);
         this.reload = true;
         setTimeout(() => this.reload = false, 100);
