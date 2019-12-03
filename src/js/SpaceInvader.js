@@ -26,7 +26,6 @@ class SpaceInvader {
     start() {
         this.drawFrame();
         let alien = new AlienShip(this.ctx, SI_GAME.assets.alien1, 1.2, 100, this.ship);
-        console.log(alien);
         this.aliens.push(alien);
         alien.addEventListener('shot', this.handleShot.bind(this));
     }
@@ -49,12 +48,14 @@ class SpaceInvader {
         this.ship.draw();
         this.missles.forEach(missle => missle.draw());
         this.aliens.forEach(alien => alien.draw());
+
+        this.detectColisions();
         
         requestAnimationFrame(() => this.drawFrame());
     }
 
     handleShot(e) {
-        let missle = new Missle(this.ctx, e.asset, e.x, e.y, e.speed, SI_GAME.data);
+        let missle = new Missle(this.ctx, e.asset, e.x, e.y, e.speed, e.dmg, e.owner);
         this.missles.push(missle);
 
         let removeHandler = e => {
@@ -62,6 +63,30 @@ class SpaceInvader {
             missle.removeEventListener('remove', removeHandler);
         }
         missle.addEventListener('remove', removeHandler);
+    }
+
+    detectColisions() {
+        
+        this.missles.forEach((missle, i) => {
+            if(
+                (missle.owner === 'npc') &&
+                (missle.x < this.ship.x + this.ship.w) &&
+                (missle.x > this.ship.x) &&
+                (missle.y < this.ship.y + this.ship.h) &&
+                (missle.y > this.ship.y)
+            ) {
+                this.ship.health -= missle.dmg;
+                this.missles.splice(i, 1);
+            } else {
+                this.aliens.forEach((alien, j) => {
+                    (missle.x < this.ship.x + this.ship.w) &&
+                    (missle.x > this.ship.x) &&
+                    (missle.y < this.ship.y + this.ship.h) &&
+                    (missle.y > this.ship.y)
+                })
+            }
+
+        });
     }
 }
 

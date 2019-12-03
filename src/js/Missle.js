@@ -1,15 +1,17 @@
 class Missle extends EventTarget {
-    constructor(ctx, img, x, y, speed) {
+    constructor(ctx, img, x, y, speed, dmg, owner) {
         super();
-        this.setVars(ctx, img, x, y, speed);
+        this.setVars(ctx, img, x, y, speed, dmg, owner);
     }
 
-    setVars(ctx, img, x, y, speed) {
+    setVars(ctx, img, x, y, speed, dmg, owner) {
         this.ctx = ctx;
         this.img = img;
-        this.speed = speed;
         this.x = x
         this.y = y
+        this.speed = speed;
+        this.dmg = dmg;
+        this.owner = owner;
         this.w = 13;
         this.h = 5;
     }

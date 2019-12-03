@@ -60,6 +60,7 @@ class Ship extends EventTarget {
         (this.leftPressed && ( this.x > 0)) && (this.x -= this.speed);
         (this.downPressed && (this.y + this.h < SI_GAME.data.h)) && (this.y += this.speed);
         (this.upPressed && (this.y > 0)) && (this.y -= this.speed);
+        this.health <= 0 && console.log("boom");
     }
 
     shot() {
@@ -70,6 +71,7 @@ class Ship extends EventTarget {
         e.asset = this.weapon.asset;
         e.speed = this.weapon.speed;
         e.dmg = this.weapon.damage;
+        e.owner = 'p1';
         this.dispatchEvent(e);
         this.reload = true;
         setTimeout(() => this.reload = false, 100);
