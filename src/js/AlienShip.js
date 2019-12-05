@@ -30,6 +30,7 @@ class AlienShip extends EventTarget {
     }
 
     update() {
+        this.health <=0 && this.shipExplosion();
         this.x -= this.speed;
         this.playerShip.y + this.playerShip.h / 2 > this.y + this.h / 2 ? this.y += this.speed / 2 : this.y -= this.speed / 2;
 
@@ -40,8 +41,13 @@ class AlienShip extends EventTarget {
         ) && this.shot(); 
     }
 
+    shipExplosion() {
+        let e = new Event('explosion')
+        this.dispatchEvent(e);
+    }
+
     shot() {
-        if(this.reload) return
+        if(this.reload) return;
         let e  = new Event('shot');
         e.x = this.x;
         e.y = this.y + Math.round(this.h / 2);
