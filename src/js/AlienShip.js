@@ -1,10 +1,10 @@
 class AlienShip extends EventTarget {
-    constructor(ctx, asset, speed, health, playerShip) {
+    constructor(ctx, alienShipData, target) {
         super();
-        this.setVars(ctx, asset, speed, health, playerShip);
+        this.setVars(ctx, alienShipData, target);
     }
 
-    setVars(ctx, asset, speed, health, playerShip) {
+    setVars(ctx, { asset, speed, health }, target) {
         this.ctx = ctx;
         this.asset = asset;
         this.speed = speed;
@@ -14,7 +14,7 @@ class AlienShip extends EventTarget {
         this.w = 100;
         this.h = 33;
         this.reload = false;
-        this.playerShip = playerShip;
+        this.target = target;
         this.alpha = 1;
         this.weapon = {
             asset: SI_GAME.assets.missle_a1, 
@@ -35,12 +35,12 @@ class AlienShip extends EventTarget {
     update() {
         this.health <=0 && this.shipExplosion();
         this.x -= this.speed;
-        this.playerShip.y + this.playerShip.h / 2 > this.y + this.h / 2 ? this.y += this.speed / 2 : this.y -= this.speed / 2;
+        this.target.y + this.target.h / 2 > this.y + this.h / 2 ? this.y += this.speed / 2 : this.y -= this.speed / 2;
 
         (
-            (this.playerShip.y < this.y + this.h / 2) &&
-            (this.playerShip.y + this.playerShip.h > this.y + this.h / 2) &&
-            (this.playerShip.x + this.playerShip.w < this.x)
+            (this.target.y < this.y + this.h / 2) &&
+            (this.target.y + this.target.h > this.y + this.h / 2) &&
+            (this.target.x + this.target.w < this.x)
         ) && this.shot(); 
     }
 

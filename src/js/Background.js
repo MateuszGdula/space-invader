@@ -1,5 +1,5 @@
 class Background {
-    constructor(ctx, asset, speed) {
+    constructor(ctx, {asset, speed}) {
         this.ctx = ctx;
         this.asset = asset;
         this.speed = speed;

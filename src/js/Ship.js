@@ -1,13 +1,15 @@
+import { playerShip } from "./gameObjects";
+
 class Ship extends EventTarget {
-    constructor(ctx, img, speed, health) {
+    constructor(ctx, shipData) {
         super();
-        this.setVars(ctx, img, speed, health);
+        this.setVars(ctx, shipData);
         this.setListeners();
     }
 
-    setVars(ctx, img, speed, health) {
+    setVars(ctx, { asset, speed, health}) {
         this.ctx = ctx;
-        this.img = img;
+        this.asset = asset;
         this.speed = speed;
         this.health = health;
         this.x = 10;
@@ -50,7 +52,7 @@ class Ship extends EventTarget {
 
     draw() {
         this.ctx.beginPath();
-        this.ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
+        this.ctx.drawImage(this.asset, this.x, this.y, this.w, this.h);
         this.ctx.closePath();
         this.update();
     }

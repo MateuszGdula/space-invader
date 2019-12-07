@@ -14,3 +14,32 @@ export const assets = {
     missle_a1: "./assets/missle_a1.png",
     explosion: "./assets/explo.png"
 }
+
+export const gameObjects = (loadedAssets) => {
+    return {
+        background: {
+            asset: loadedAssets.bg,
+            speed: 0.5
+        },
+        playerShip: {
+            asset: loadedAssets.ship,
+            speed: 2,
+            health: 100
+        },
+        alienShips: [
+            {
+                asset: loadedAssets.alien1,
+                speed: 1.2,
+                health: 100
+            }
+        ],
+        weapons: [
+            {
+                name: "Blaster WTF-40",
+                asset: loadedAssets.missle1,
+                damage: 20,
+                speed: 4    
+            }
+        ]
+    }
+}

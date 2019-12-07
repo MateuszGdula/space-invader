@@ -12,8 +12,8 @@ class SpaceInvader {
 
     setVars() {
         this.ctx = SI_GAME.data.ctx;
-        this.bg = new Background(this.ctx, SI_GAME.assets.bg, 0.5);
-        this.ship = new Ship(this.ctx, SI_GAME.assets.ship, 2, 100);
+        this.bg = new Background(this.ctx, SI_GAME.objects.background);
+        this.ship = new Ship(this.ctx, SI_GAME.objects.playerShip);
         this.aliens = [];
         this.missles = [];
     }
@@ -25,7 +25,7 @@ class SpaceInvader {
 
     start() {
         this.drawFrame();
-        let alien = new AlienShip(this.ctx, SI_GAME.assets.alien1, 1.2, 100, this.ship);
+        let alien = new AlienShip(this.ctx, SI_GAME.objects.alienShips[0], this.ship);
         this.aliens.push(alien);
         alien.addEventListener('shot', this.handleShot.bind(this));
         alien.addEventListener('explosion', this.handleAlienExplosion.bind(this));
