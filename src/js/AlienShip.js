@@ -15,6 +15,7 @@ class AlienShip extends EventTarget {
         this.h = 33;
         this.reload = false;
         this.playerShip = playerShip;
+        this.alpha = 1;
         this.weapon = {
             asset: SI_GAME.assets.missle_a1, 
             damage: 20,
@@ -24,8 +25,10 @@ class AlienShip extends EventTarget {
 
     draw() {
         this.ctx.beginPath();
+        this.ctx.globalAlpha = this.alpha
         this.ctx.drawImage(this.asset, this.x, this.y, this.w, this.h);
         this.ctx.closePath();
+        this.ctx.globalAlpha = 1;
         this.update();
     }
 
@@ -42,8 +45,11 @@ class AlienShip extends EventTarget {
     }
 
     shipExplosion() {
-        let e = new Event('explosion')
-        this.dispatchEvent(e);
+        this.asset = SI_GAME.assets.explosion;
+        this.w += 2.4;
+        this.h += 0.8;
+        this.alpha -= 0.03;
+        this.alpha <= 0 && this.dispatchEvent(new Event('explosion'));
     }
 
     shot() {

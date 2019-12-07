@@ -66,6 +66,10 @@ class SpaceInvader {
         missle.addEventListener('remove', removeHandler);
     }
 
+    handlePlayerExplosion(e) {
+
+    }
+
     handleAlienExplosion(e) {
         this.aliens.splice(this.aliens.indexOf(e.target), 1);
     }
@@ -90,7 +94,6 @@ class SpaceInvader {
                         (missle.y + missle.h > alien.y) &&
                         (missle.y < alien.y + alien.h) 
                     ) {
-                        console.log(missle.owner);
                         alien.health -= missle.dmg;
                         this.missles.splice(i, 1);
                     }
