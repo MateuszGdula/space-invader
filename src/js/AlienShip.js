@@ -7,15 +7,16 @@ class AlienShip extends EventTarget {
     setVars(ctx, { asset, speed, health, weapon }, target) {
         this.ctx = ctx;
         this.asset = asset;
-        this.speed = speed;
+        this.speed = speed - Math.random();
         this.health = health;
-        this.x = SI_GAME.data.w;
-        this.y = SI_GAME.data.h / 2;
         this.w = 100;
         this.h = 33;
+        this.x = SI_GAME.data.w;
+        this.y = SI_GAME.data.h / 2;
+        this.y = 1 + Math.floor(Math.random() * (SI_GAME.data.h - this.h))
+        this.alpha = 1;
         this.reload = false;
         this.target = target;
-        this.alpha = 1;
         this.weapon = weapon;
     }
 
@@ -23,8 +24,8 @@ class AlienShip extends EventTarget {
         this.ctx.beginPath();
         this.ctx.globalAlpha = this.alpha
         this.ctx.drawImage(this.asset, this.x, this.y, this.w, this.h);
-        this.ctx.closePath();
         this.ctx.globalAlpha = 1;
+        this.ctx.closePath();
         this.update();
     }
 

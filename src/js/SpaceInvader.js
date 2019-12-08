@@ -1,6 +1,6 @@
 /*
 To do:
-1. Add player's ship explosion on <=0 health
+1. 
 2. Enemies spawning logic
 3. Add a passibility to play/pause the game 
 4. Add UI elements: heath bar, weapons, score
@@ -13,12 +13,13 @@ import Background from "./Background";
 import Ship from "./Ship";
 import Missle from './Missle';
 import AlienShip from './AlienShip';
+import levels from './levels';
 
 class SpaceInvader {
     constructor() {
         this.setVars();
         this.setListeners();
-        this.start();
+        this.start(levels.level1);
     }
 
     setVars() {
@@ -27,19 +28,39 @@ class SpaceInvader {
         this.ship = new Ship(this.ctx, SI_GAME.objects.playerShip);
         this.aliens = [];
         this.missles = [];
+        this.score = 0;
+        this.timer = 0;
+        this.timerInterval = null;
     }
 
     setListeners() {
         this.handleShot = this.handleShot.bind(this);
         this.ship.addEventListener('shot', this.handleShot);
+        this.handlePlayerExplosion = this.handlePlayerExplosion.bind(this);
+        this.ship.addEventListener('explosion', this.handlePlayerExplosion)
     }
 
-    start() {
+    start(level) {
+        this.timerInterval = setInterval(() => {
+            if(level[this.timer]) {
+                switch ( level[this.timer].type) {
+                    case 'enemy':
+                        for(let i = 0; i < level[this.timer].number; i++) {
+                            let alien = new AlienShip(this.ctx, SI_GAME.objects.alienShips[0], this.ship);
+                            this.aliens.push(alien);
+                            alien.addEventListener('shot', this.handleShot.bind(this));
+                            alien.addEventListener('explosion', this.handleAlienExplosion.bind(this));
+                        }
+                        break;
+                    case 'weapon':
+                        break;
+                }
+            }
+
+            this.timer ++;
+        }, 1000);
+
         this.drawFrame();
-        let alien = new AlienShip(this.ctx, SI_GAME.objects.alienShips[0], this.ship);
-        this.aliens.push(alien);
-        alien.addEventListener('shot', this.handleShot.bind(this));
-        alien.addEventListener('explosion', this.handleAlienExplosion.bind(this));
     }
 
     pause() {
@@ -78,7 +99,7 @@ class SpaceInvader {
     }
 
     handlePlayerExplosion(e) {
-
+        console.log('game over');
     }
 
     handleAlienExplosion(e) {

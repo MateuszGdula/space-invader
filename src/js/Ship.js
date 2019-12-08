@@ -11,10 +11,11 @@ class Ship extends EventTarget {
         this.asset = asset;
         this.speed = speed;
         this.health = health;
-        this.x = 10;
-        this.y = SI_GAME.data.h / 2;
         this.w = 100;
         this.h = 33;
+        this.x = 10;
+        this.y = SI_GAME.data.h / 2;
+        this.alpha = 1;
         this.rightPressed = false;
         this.leftPressed = false;
         this.upPressed = false;
@@ -54,17 +55,27 @@ class Ship extends EventTarget {
 
     draw() {
         this.ctx.beginPath();
+        this.ctx.globalAlpha = this.alpha
         this.ctx.drawImage(this.asset, this.x, this.y, this.w, this.h);
+        this.ctx.globalAlpha = 1;
         this.ctx.closePath();
         this.update();
     }
 
     update() {
+        this.health <= 0 && this.shipExplosion();
         (this.rightPressed && (this.x + this.w < SI_GAME.data.w)) && (this.x += this.speed);
         (this.leftPressed && ( this.x > 0)) && (this.x -= this.speed);
         (this.downPressed && (this.y + this.h < SI_GAME.data.h)) && (this.y += this.speed);
         (this.upPressed && (this.y > 0)) && (this.y -= this.speed);
-        this.health <= 0 && console.log("boom");
+    }
+
+    shipExplosion() {
+        this.asset = SI_GAME.assets.explosion;
+        this.w += 2.4;
+        this.h += 0.8;
+        this.alpha -= 0.03;
+        this.alpha <= 0 && this.dispatchEvent(new Event('explosion'));
     }
 
     shot() {
