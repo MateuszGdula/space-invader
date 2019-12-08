@@ -1,12 +1,13 @@
 /*
 To do:
 1. 
-2. Enemies spawning logic
+2. 
 3. Add a passibility to play/pause the game 
 4. Add UI elements: heath bar, weapons, score
 5. Add a passibility to switch weapons
 6. Add responsiveness
 7. Add manifest and sw
+8. New Ships, missles, more levels
 */
 
 import Background from "./Background";
@@ -31,6 +32,7 @@ class SpaceInvader {
         this.score = 0;
         this.timer = 0;
         this.timerInterval = null;
+        this.playState = false;
     }
 
     setListeners() {
@@ -38,21 +40,30 @@ class SpaceInvader {
         this.ship.addEventListener('shot', this.handleShot);
         this.handlePlayerExplosion = this.handlePlayerExplosion.bind(this);
         this.ship.addEventListener('explosion', this.handlePlayerExplosion)
+        document.addEventListener('keydown', e => {
+            e.keyCode === 27 && this.pause();
+            e.keyCode === 13 && this.resume();
+        });
     }
 
     start(level) {
+        this.playState = true;
         this.timerInterval = setInterval(() => {
+            if(!this.playState) return;
+
             if(level[this.timer]) {
-                switch ( level[this.timer].type) {
+                const { type, index, number, chaser } = level[this.timer];
+                switch (type) {
                     case 'enemy':
-                        for(let i = 0; i < level[this.timer].number; i++) {
-                            let alien = new AlienShip(this.ctx, SI_GAME.objects.alienShips[0], this.ship);
-                            this.aliens.push(alien);
+                        for(let i = 0; i < number; i++) {
+                            let alien = new AlienShip(this.ctx, SI_GAME.objects.alienShips[index], this.ship, chaser);
                             alien.addEventListener('shot', this.handleShot.bind(this));
                             alien.addEventListener('explosion', this.handleAlienExplosion.bind(this));
+                            this.aliens.push(alien);
                         }
                         break;
                     case 'weapon':
+                        //spawn weapon box
                         break;
                 }
             }
@@ -64,11 +75,12 @@ class SpaceInvader {
     }
 
     pause() {
-
+        this.playState = false;
     }
 
-    stop() {
-
+    resume() {
+        this.playState = true
+        this.drawFrame();
     }
 
     reset() {
@@ -84,7 +96,7 @@ class SpaceInvader {
 
         this.detectColisions();
         
-        requestAnimationFrame(() => this.drawFrame());
+        this.playState && requestAnimationFrame(() => this.drawFrame());
     }
 
     handleShot(e) {

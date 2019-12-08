@@ -1,22 +1,23 @@
 class AlienShip extends EventTarget {
-    constructor(ctx, alienShipData, target) {
+    constructor(ctx, alienShipData, target, chaser) {
         super();
-        this.setVars(ctx, alienShipData, target);
+        this.setVars(ctx, alienShipData, target, chaser);
     }
 
-    setVars(ctx, { asset, speed, health, weapon }, target) {
+    setVars(ctx, { asset, speed, health, weapon }, target, chaser) {
         this.ctx = ctx;
         this.asset = asset;
-        this.speed = speed - Math.random();
+        this.speed = speed - Math.random() / 2;
         this.health = health;
         this.w = 100;
         this.h = 33;
         this.x = SI_GAME.data.w;
         this.y = SI_GAME.data.h / 2;
         this.y = 1 + Math.floor(Math.random() * (SI_GAME.data.h - this.h))
+        this.target = target;
+        this.chaser = chaser;
         this.alpha = 1;
         this.reload = false;
-        this.target = target;
         this.weapon = weapon;
     }
 
@@ -34,11 +35,11 @@ class AlienShip extends EventTarget {
         this.x -= this.speed;
         
         (
-            (this.target.y + this.target.h / 2) >
-            (this.y + this.h / 2)
+            this.chaser &&
+            (this.target.y + this.target.h / 2) > (this.y + this.h / 2)
         ) ? 
         this.y += this.speed / 2 :
-        this.y -= this.speed / 2;
+        this.chaser && (this.y -= this.speed / 2);
 
         (
             (this.target.y < this.y + this.h / 2) &&
