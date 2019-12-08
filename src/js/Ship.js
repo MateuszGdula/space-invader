@@ -1,9 +1,8 @@
-import { playerShip } from "./gameObjects";
-
 class Ship extends EventTarget {
     constructor(ctx, shipData) {
         super();
         this.setVars(ctx, shipData);
+        this.addWeapon(SI_GAME.weapons[0]);
         this.setListeners();
     }
 
@@ -21,18 +20,16 @@ class Ship extends EventTarget {
         this.upPressed = false;
         this.downPressed = false;
         this.reload = false;
-        this.weapon = {
-            asset: SI_GAME.assets.missle1,
-            damage: 20,
-            speed: 4
-        }
+        this.weapons = [];
+        this.eqWeapon = null;
     }
-
+    
     setListeners() {
         this.keyDownHandler = this.keyDownHandler.bind(this);
         document.addEventListener('keydown', this.keyDownHandler);
         this.keyUpHandler = this.keyUpHandler.bind(this);
         document.addEventListener('keyup', this.keyUpHandler);
+        console.log(this.eqWeapon === SI_GAME.objects.weapons[0]);
     }
 
     keyDownHandler(e) {
@@ -48,6 +45,12 @@ class Ship extends EventTarget {
         (e.key == 'Left' || e.key == 'ArrowLeft') && (this.leftPressed = false);
         (e.key == 'Up' || e.key == 'ArrowUp') && (this.upPressed = false);
         (e.key == 'Down' || e.key == 'ArrowDown') && (this.downPressed = false);
+    }
+
+    addWeapon(weapon) {
+        const newWeapon = {...weapon}
+        this.weapons.push(newWeapon);
+        this.eqWeapon = newWeapon;
     }
 
     draw() {
@@ -70,9 +73,9 @@ class Ship extends EventTarget {
         let e  = new Event('shot');
         e.x = this.x + this.w;
         e.y = this.y + Math.round(this.h / 2);
-        e.asset = this.weapon.asset;
-        e.speed = this.weapon.speed;
-        e.dmg = this.weapon.damage;
+        e.asset = this.eqWeapon.asset;
+        e.speed = this.eqWeapon.speed;
+        e.dmg = this.eqWeapon.damage;
         e.owner = 'p1';
         this.dispatchEvent(e);
         this.reload = true;

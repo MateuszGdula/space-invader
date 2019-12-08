@@ -1,4 +1,4 @@
-import {data, assets, gameObjects} from "./SI_VARS";
+import {data, assets, gameObjects, weapons } from "./SI_VARS";
 import SpaceInvader from './SpaceInvader';
 
 function assetsLoader(assets) {
@@ -17,10 +17,10 @@ function assetsLoader(assets) {
 }
 
 assetsLoader(assets).then(loadedAssets => {
-    const SI_GAME = {};
+    window.SI_GAME = {};
     SI_GAME.assets = loadedAssets;
     SI_GAME.data = data;
     SI_GAME.objects = gameObjects(loadedAssets);
-    window.SI_GAME = SI_GAME;
+    SI_GAME.weapons = weapons(loadedAssets);
     new SpaceInvader();
 });

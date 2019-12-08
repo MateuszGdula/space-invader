@@ -38,8 +38,37 @@ export const gameObjects = (loadedAssets) => {
                 name: "Blaster WTF-40",
                 asset: loadedAssets.missle1,
                 damage: 20,
-                speed: 4    
+                speed: 4,
+                reload: 100,
+                charges: -1 
+            },
+            {
+                name: "Blaster WTF-30",
+                asset: loadedAssets.missle1,
+                damage: 10,
+                speed: 3,
+                reload: 1000
             }
         ]
     }
+}
+
+export const weapons = (loadedAssets) => {
+    return [
+        {
+            name: "Blaster WTF-40",
+            asset: loadedAssets.missle1,
+            damage: 20,
+            speed: 4,
+            reload: 100,
+            charges: -1 
+        },
+        {
+            name: "Blaster WTF-30",
+            asset: loadedAssets.missle1,
+            damage: 10,
+            speed: 3,
+            reload: 1000
+        }
+    ]
 }
