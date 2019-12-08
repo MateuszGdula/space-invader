@@ -30,26 +30,16 @@ export const gameObjects = (loadedAssets) => {
             {
                 asset: loadedAssets.alien1,
                 speed: 1.2,
-                health: 100
+                health: 100,
+                weapon: {
+                    name: "Blaster WTF-30",
+                    asset: loadedAssets.missle_a1,
+                    damage: 10,
+                    speed: 3,
+                    reloadTime: 1000
+                }
             }
         ],
-        weapons: [
-            {
-                name: "Blaster WTF-40",
-                asset: loadedAssets.missle1,
-                damage: 20,
-                speed: 4,
-                reload: 100,
-                charges: -1 
-            },
-            {
-                name: "Blaster WTF-30",
-                asset: loadedAssets.missle1,
-                damage: 10,
-                speed: 3,
-                reload: 1000
-            }
-        ]
     }
 }
 
@@ -60,15 +50,8 @@ export const weapons = (loadedAssets) => {
             asset: loadedAssets.missle1,
             damage: 20,
             speed: 4,
-            reload: 100,
+            reloadTime: 100,
             charges: -1 
-        },
-        {
-            name: "Blaster WTF-30",
-            asset: loadedAssets.missle1,
-            damage: 10,
-            speed: 3,
-            reload: 1000
         }
     ]
 }

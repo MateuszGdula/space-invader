@@ -4,7 +4,7 @@ class AlienShip extends EventTarget {
         this.setVars(ctx, alienShipData, target);
     }
 
-    setVars(ctx, { asset, speed, health }, target) {
+    setVars(ctx, { asset, speed, health, weapon }, target) {
         this.ctx = ctx;
         this.asset = asset;
         this.speed = speed;
@@ -16,11 +16,7 @@ class AlienShip extends EventTarget {
         this.reload = false;
         this.target = target;
         this.alpha = 1;
-        this.weapon = {
-            asset: SI_GAME.assets.missle_a1, 
-            damage: 20,
-            speed: 3
-        }
+        this.weapon = weapon;
     }
 
     draw() {
@@ -35,7 +31,13 @@ class AlienShip extends EventTarget {
     update() {
         this.health <=0 && this.shipExplosion();
         this.x -= this.speed;
-        this.target.y + this.target.h / 2 > this.y + this.h / 2 ? this.y += this.speed / 2 : this.y -= this.speed / 2;
+        
+        (
+            (this.target.y + this.target.h / 2) >
+            (this.y + this.h / 2)
+        ) ? 
+        this.y += this.speed / 2 :
+        this.y -= this.speed / 2;
 
         (
             (this.target.y < this.y + this.h / 2) &&
@@ -63,7 +65,7 @@ class AlienShip extends EventTarget {
         e.owner = 'npc';
         this.dispatchEvent(e);
         this.reload = true;
-        setTimeout(() => this.reload = false, 1000);
+        setTimeout(() => this.reload = false, this.weapon.reloadTime);
     }
 }
 

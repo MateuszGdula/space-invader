@@ -1,3 +1,14 @@
+/*
+To do:
+1. Add player's ship explosion on <=0 health
+2. Enemies spawning logic
+3. Add a passibility to play/pause the game 
+4. Add UI elements: heath bar, weapons, score
+5. Add a passibility to switch weapons
+6. Add responsiveness
+7. Add manifest and sw
+*/
+
 import Background from "./Background";
 import Ship from "./Ship";
 import Missle from './Missle';

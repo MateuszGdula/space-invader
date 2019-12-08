@@ -29,7 +29,6 @@ class Ship extends EventTarget {
         document.addEventListener('keydown', this.keyDownHandler);
         this.keyUpHandler = this.keyUpHandler.bind(this);
         document.addEventListener('keyup', this.keyUpHandler);
-        console.log(this.eqWeapon === SI_GAME.objects.weapons[0]);
     }
 
     keyDownHandler(e) {
@@ -79,7 +78,7 @@ class Ship extends EventTarget {
         e.owner = 'p1';
         this.dispatchEvent(e);
         this.reload = true;
-        setTimeout(() => this.reload = false, 100);
+        setTimeout(() => this.reload = false, this.eqWeapon.reloadTime);
     }
 }
 
