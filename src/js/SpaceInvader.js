@@ -20,7 +20,6 @@ class SpaceInvader {
     constructor() {
         this.setVars();
         this.setListeners();
-        this.start(levels.level1);
     }
     
     setVars() {
@@ -31,6 +30,11 @@ class SpaceInvader {
         this.missles = [];
         this.score = 0;
         this.timer = 0;
+        this.menu = document.querySelector('.menu');
+        this.newGameBtn = document.querySelector('.menu__new-game');
+        this.resumeBtn = document.querySelector('.menu__resume');
+        this.optionsBtn = document.querySelector('.menu__options');
+        this.exitBtn = document.querySelector('.menu__exit');
         this.timerInterval = null;
         this.playState = false;
     }
@@ -40,10 +44,23 @@ class SpaceInvader {
         this.ship.addEventListener('shot', this.handleShot);
         this.handlePlayerExplosion = this.handlePlayerExplosion.bind(this);
         this.ship.addEventListener('explosion', this.handlePlayerExplosion)
-        document.addEventListener('keydown', e => {
-            e.keyCode === 27 && this.pause();
-            e.keyCode === 13 && this.resume();
+        this.newGameBtn.addEventListener('click', e => {
+            this.timerInterval && this.reset();
+            this.start(levels.level1);
+            this.menu.classList.toggle('open');
         });
+        this.resumeBtn.addEventListener('click', e => {
+            this.resume();
+            this.menu.classList.toggle('open');
+        });
+        this.toggleMenuHandler = this.toggleMenuHandler.bind(this);
+        document.addEventListener('keydown', this.toggleMenuHandler);
+    }
+
+    toggleMenuHandler(e) {
+        if(e.keyCode !== 27) return;
+        this.playState ? this.pause() : this.resume();
+        this.menu.classList.toggle('open');
     }
 
     start(level) {
@@ -84,7 +101,7 @@ class SpaceInvader {
     }
 
     reset() {
-
+        location.reload();
     }
 
     drawFrame() {

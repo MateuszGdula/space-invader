@@ -89,6 +89,7 @@ class Ship extends EventTarget {
         e.owner = 'p1';
         this.dispatchEvent(e);
         this.reload = true;
+        console.log(e.x, e.y);
         setTimeout(() => this.reload = false, this.eqWeapon.reloadTime);
     }
 }

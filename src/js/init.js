@@ -23,5 +23,5 @@ assetsLoader(assets).then(loadedAssets => {
     SI_GAME.data = data;
     SI_GAME.objects = gameObjects(loadedAssets);
     SI_GAME.weapons = weapons(loadedAssets);
-    new SpaceInvader();
+    SI_GAME.gameInstance = new SpaceInvader();
 });
