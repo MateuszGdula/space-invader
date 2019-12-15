@@ -1,4 +1,8 @@
-let canvas = document.querySelector('.game');
+const canvas = document.querySelector('.game');
+
+const canvasHeight = canvas.offsetHeight;
+canvas.width = Math.round(canvasHeight * 1.77);
+canvas.height = canvasHeight;
 
 export const data = {
     ctx: canvas.getContext('2d'),
@@ -24,13 +28,13 @@ export const gameObjects = (loadedAssets) => {
         playerShip: {
             asset: loadedAssets.ship,
             speed: 2,
-            health: 100
+            shield: 100
         },
         alienShips: [
             {
                 asset: loadedAssets.alien1,
                 speed: 1.2,
-                health: 100,
+                shield: 100,
                 weapon: {
                     name: "Blaster WTF-30",
                     asset: loadedAssets.missle_a1,

@@ -145,7 +145,7 @@ class SpaceInvader {
                 (missle.y < this.ship.y + this.ship.h) &&
                 (missle.y > this.ship.y)
             ) {
-                this.ship.health -= missle.dmg;
+                this.ship.shield -= missle.dmg;
                 this.missles.splice(i, 1);
             } else if (missle.owner === 'p1') {
                 this.aliens.forEach((alien, j) => {
@@ -155,7 +155,7 @@ class SpaceInvader {
                         (missle.y + missle.h > alien.y) &&
                         (missle.y < alien.y + alien.h) 
                     ) {
-                        alien.health -= missle.dmg;
+                        alien.shield -= missle.dmg;
                         this.missles.splice(i, 1);
                     }
                 })
