@@ -2,7 +2,7 @@
 To do:
 1. 
 2. 
-3. Add a passibility to play/pause the game 
+3. 
 4. Add UI elements: heath bar, weapons, score
 5. Add a passibility to switch weapons
 6. Add responsiveness
@@ -22,7 +22,7 @@ class SpaceInvader {
         this.setListeners();
         this.start(levels.level1);
     }
-
+    
     setVars() {
         this.ctx = SI_GAME.data.ctx;
         this.bg = new Background(this.ctx, SI_GAME.objects.background);

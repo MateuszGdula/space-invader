@@ -1,0 +1,31 @@
+@import "./reset.scss";
+
+body {
+  margin: 0;
+  padding: 0;
+}
+canvas {
+  margin: 20px auto;
+  background-color: #eeeeee;
+  display: block;
+}
+main {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  background-color: #eeeeee;
+}
+nav {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+ul {
+  font-size: 28px;
+  line-height: 34px;
+  color: #ffffff;
+  text-align: center;
+  list-style-type: none;
+}

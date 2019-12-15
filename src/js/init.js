@@ -1,3 +1,4 @@
+import '../scss/main.scss';
 import {data, assets, gameObjects, weapons } from "./SI_VARS";
 import SpaceInvader from './SpaceInvader';
 
