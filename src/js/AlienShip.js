@@ -4,21 +4,21 @@ class AlienShip extends EventTarget {
         this.setVars(ctx, alienShipData, target, chaser);
     }
 
-    setVars(ctx, { asset, speed, shield, weapon }, target, chaser) {
+    setVars(ctx, { asset, speed, shield, weapon, reward }, target, chaser) {
         this.ctx = ctx;
         this.asset = asset;
         this.speed = speed - Math.random() / 2;
         this.shield = shield;
-        this.w = 100;
-        this.h = 33;
+        this.w = SI_GAME.data.w * 0.08;
+        this.h = SI_GAME.data.h * 0.06;
         this.x = SI_GAME.data.w;
-        this.y = SI_GAME.data.h / 2;
         this.y = 1 + Math.floor(Math.random() * (SI_GAME.data.h - this.h))
         this.target = target;
         this.chaser = chaser;
         this.alpha = 1;
         this.reload = false;
         this.weapon = weapon;
+        this.reward = reward;
     }
 
     draw() {

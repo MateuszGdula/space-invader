@@ -12,8 +12,8 @@ class Missle extends EventTarget {
         this.speed = speed;
         this.dmg = dmg;
         this.owner = owner;
-        this.w = 13;
-        this.h = 5;
+        this.w = SI_GAME.data.w * 0.02;
+        this.h = SI_GAME.data.h * 0.01;
     }
 
     draw() {

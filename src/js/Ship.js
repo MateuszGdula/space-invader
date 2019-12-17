@@ -11,12 +11,10 @@ class Ship extends EventTarget {
         this.asset = asset;
         this.speed = speed;
         this.shield = shield;
-        this.w = 100;
-        this.h = 33;
+        this.w = SI_GAME.data.w * 0.08;
+        this.h = SI_GAME.data.h * 0.06;
         this.x = 10;
         this.y = SI_GAME.data.h / 2;
-        this.textX = 20;
-        this.textY = SI_GAME.data.h - 20;
         this.alpha = 1;
         this.rightPressed = false;
         this.leftPressed = false;
@@ -59,9 +57,6 @@ class Ship extends EventTarget {
         this.ctx.beginPath();
         this.ctx.globalAlpha = this.alpha
         this.ctx.drawImage(this.asset, this.x, this.y, this.w, this.h);
-        this.ctx.font = '18px Arial';
-        this.ctx.fillStyle = '#ffffff'
-        this.ctx.fillText(`Shield: ${Math.max(0, this.shield)}%`, this.textX, this.textY);
         this.ctx.globalAlpha = 1;
         this.ctx.closePath();
         this.update();

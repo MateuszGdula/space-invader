@@ -41,7 +41,8 @@ export const gameObjects = (loadedAssets) => {
                     damage: 10,
                     speed: 3,
                     reloadTime: 1000
-                }
+                },
+                reward: 100
             }
         ],
     }

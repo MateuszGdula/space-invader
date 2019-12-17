@@ -37,6 +37,12 @@ class SpaceInvader {
         this.exitBtn = document.querySelector('.menu__exit');
         this.timerInterval = null;
         this.playState = false;
+        this.textWeaponX = 20;
+        this.textWeaponY = SI_GAME.data.h - 20;
+        this.textShieldX = 20;
+        this.textShieldY = SI_GAME.data.h - 40;
+        this.textScoreX = 20;
+        this.textScoreY = SI_GAME.data.h - 60;
     }
 
     setListeners() {
@@ -110,10 +116,22 @@ class SpaceInvader {
         this.ship.draw();
         this.missles.forEach(missle => missle.draw());
         this.aliens.forEach(alien => alien.draw());
+        this.drawUI();
 
         this.detectColisions();
         
         this.playState && requestAnimationFrame(() => this.drawFrame());
+    }
+
+    drawUI() {
+        this.ctx.beginPath();
+        this.ctx.font = '18px Arial';
+        this.ctx.fillStyle = '#ffffff'
+        this.ctx.fillText(`Shield: ${Math.max(0, this.ship.shield)}%`, this.textShieldX, this.textShieldY);
+        this.ctx.fillText(`Weapon: ${this.ship.eqWeapon.name}`, this.textWeaponX, this.textWeaponY);
+        this.ctx.fillText(`Score: ${this.score}`, this.textScoreX, this.textScoreY);
+        this.ctx.closePath();
+
     }
 
     handleShot(e) {
@@ -133,6 +151,7 @@ class SpaceInvader {
 
     handleAlienExplosion(e) {
         this.aliens.splice(this.aliens.indexOf(e.target), 1);
+        this.score += e.target.reward;
     }
 
     detectColisions() {
