@@ -3,11 +3,11 @@ To do:
 1. 
 2. 
 3. 
-4. Add UI elements: heath bar, weapons, score
-5. Add a passibility to switch weapons
+4. 
 6. Add responsiveness
 7. Add manifest and sw
 8. New Ships, missles, more levels
+5. Add a passibility to switch weapons
 */
 
 import Background from "./Background";
@@ -52,6 +52,7 @@ class SpaceInvader {
         this.ship.addEventListener('explosion', this.handlePlayerExplosion)
         this.newGameBtn.addEventListener('click', e => {
             this.timerInterval && this.reset();
+            document.querySelector('main').requestFullscreen();
             this.start(levels.level1);
             this.menu.classList.toggle('open');
         });

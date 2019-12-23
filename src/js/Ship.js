@@ -26,10 +26,21 @@ class Ship extends EventTarget {
     }
     
     setListeners() {
-        this.keyDownHandler = this.keyDownHandler.bind(this);
-        document.addEventListener('keydown', this.keyDownHandler);
-        this.keyUpHandler = this.keyUpHandler.bind(this);
-        document.addEventListener('keyup', this.keyUpHandler);
+        if(SI_GAME.data.isMobile) {
+            this.touchX = this.x;
+            this.touchY = this.y;
+            console.log(this.touchX);
+            console.log(this.touchY);
+            this.shot = this.shot.bind(this);
+            document.addEventListener('click', this.shot);
+            this.swipesHandler = this.swipesHandler.bind(this);
+            document.addEventListener('touchmove', this.swipesHandler);
+        } else {
+            this.keyDownHandler = this.keyDownHandler.bind(this);
+            document.addEventListener('keydown', this.keyDownHandler);
+            this.keyUpHandler = this.keyUpHandler.bind(this);
+            document.addEventListener('keyup', this.keyUpHandler);
+        }
     }
 
     keyDownHandler(e) {
@@ -39,12 +50,35 @@ class Ship extends EventTarget {
         (e.key == 'Down' || e.key == 'ArrowDown') && (this.downPressed = true);
         e.key === " " && this.shot();
     }
-
+    
     keyUpHandler(e) {
         (e.key == 'Right' || e.key == 'ArrowRight') && (this.rightPressed = false);
         (e.key == 'Left' || e.key == 'ArrowLeft') && (this.leftPressed = false);
         (e.key == 'Up' || e.key == 'ArrowUp') && (this.upPressed = false);
         (e.key == 'Down' || e.key == 'ArrowDown') && (this.downPressed = false);
+    }
+    
+    swipesHandler(e) {
+        let touch = e.touches[0];
+        if(touch.clientX > this.touchX) {
+            this.rightPressed = true;
+            this.touchX = touch.clientX;
+        }
+        if(touch.clientX < this.touchX) {
+            this.leftPressed = true;
+            this.touchX = touch.clientX;
+        }
+        if(touch.clientY < this.touchY) {
+            this.upPressed = true;
+            this.touchY = touch.clientY;
+        }
+        if(touch.clientY > this.touchY) {
+            this.downPressed = true;
+            this.touchY = touch.clientY;
+        }
+        if(e.touches.length > 1) {
+            this.shot();
+        }
     }
 
     addWeapon(weapon) {
@@ -68,6 +102,10 @@ class Ship extends EventTarget {
         (this.leftPressed && ( this.x > 0)) && (this.x -= this.speed);
         (this.downPressed && (this.y + this.h < SI_GAME.data.h)) && (this.y += this.speed);
         (this.upPressed && (this.y > 0)) && (this.y -= this.speed);
+        this.rightPressed = false;
+        this.leftPressed = false;
+        this.upPressed = false;
+        this.downPressed = false;
     }
 
     shipExplosion() {

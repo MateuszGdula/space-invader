@@ -8,6 +8,7 @@ export const data = {
     ctx: canvas.getContext('2d'),
     w: canvas.width,
     h: canvas.height,
+    isMobile: /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
 }
 
 export const assets = {

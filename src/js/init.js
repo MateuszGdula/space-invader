@@ -23,5 +23,8 @@ assetsLoader(assets).then(loadedAssets => {
     SI_GAME.data = data;
     SI_GAME.objects = gameObjects(loadedAssets);
     SI_GAME.weapons = weapons(loadedAssets);
+
+    data.isMobile && screen.orientation.lock('landscape');
+
     SI_GAME.gameInstance = new SpaceInvader();
 });
