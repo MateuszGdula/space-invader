@@ -4,10 +4,10 @@ To do:
 2. 
 3. 
 4. 
-6. Add responsiveness
-7. Add manifest and sw
+6. 
 8. New Ships, missles, more levels
 5. Add a passibility to switch weapons
+7. Add manifest and sw
 */
 
 import Background from "./Background";
@@ -52,7 +52,10 @@ class SpaceInvader {
         this.ship.addEventListener('explosion', this.handlePlayerExplosion)
         this.newGameBtn.addEventListener('click', e => {
             this.timerInterval && this.reset();
-            document.querySelector('main').requestFullscreen();
+            if (SI_GAME.data.isMobile) {
+                document.querySelector('main').requestFullscreen();
+                screen.orientation.lock('landscape');
+            }
             this.start(levels.level1);
             this.menu.classList.toggle('open');
         });
@@ -80,10 +83,10 @@ class SpaceInvader {
                 switch (type) {
                     case 'enemy':
                         for(let i = 0; i < number; i++) {
-                            let alien = new AlienShip(this.ctx, SI_GAME.objects.alienShips[index], this.ship, chaser);
+/*                             let alien = new AlienShip(this.ctx, SI_GAME.objects.alienShips[index], this.ship, chaser);
                             alien.addEventListener('shot', this.handleShot.bind(this));
                             alien.addEventListener('explosion', this.handleAlienExplosion.bind(this));
-                            this.aliens.push(alien);
+                            this.aliens.push(alien); */
                         }
                         break;
                     case 'weapon':
@@ -117,14 +120,14 @@ class SpaceInvader {
         this.ship.draw();
         this.missles.forEach(missle => missle.draw());
         this.aliens.forEach(alien => alien.draw());
-        this.drawUI();
+        this.drawStatus();
 
         this.detectColisions();
         
         this.playState && requestAnimationFrame(() => this.drawFrame());
     }
 
-    drawUI() {
+    drawStatus() {
         this.ctx.beginPath();
         this.ctx.font = '18px Arial';
         this.ctx.fillStyle = '#ffffff'

@@ -1,2 +1,4 @@
 node_modules
-dist/assets
+dist/assets/other
+dist/manifest.json
+service-worker.js

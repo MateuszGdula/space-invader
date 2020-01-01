@@ -6,7 +6,7 @@ class Ship extends EventTarget {
         this.setListeners();
     }
 
-    setVars(ctx, { asset, speed, shield}) {
+    setVars(ctx, { asset, speed, shield }) {
         this.ctx = ctx;
         this.asset = asset;
         this.speed = speed;
@@ -16,10 +16,10 @@ class Ship extends EventTarget {
         this.x = 10;
         this.y = SI_GAME.data.h / 2;
         this.alpha = 1;
-        this.rightPressed = false;
-        this.leftPressed = false;
-        this.upPressed = false;
-        this.downPressed = false;
+        this.moveRight = false;
+        this.moveLeft = false;
+        this.moveUp = false;
+        this.moveDown = false;
         this.reload = false;
         this.weapons = [];
         this.eqWeapon = null;
@@ -27,15 +27,22 @@ class Ship extends EventTarget {
     
     setListeners() {
         if(SI_GAME.data.isMobile) {
-            this.touchX = this.x;
-            this.touchY = this.y;
-            console.log(this.touchX);
-            console.log(this.touchY);
+            //listeners for mobile devices
             this.shot = this.shot.bind(this);
             document.addEventListener('click', this.shot);
             this.swipesHandler = this.swipesHandler.bind(this);
             document.addEventListener('touchmove', this.swipesHandler);
+
+            document.addEventListener('touchstart', e => {
+                this.touchX = this.x;
+                this.touchY = this.y
+            });
+
+            document.addEventListener('touchend', e => {
+                this.moveUp = this.moveDown = this.moveRight = this.moveLeft = false;
+            });
         } else {
+            //listeners for deskop devices
             this.keyDownHandler = this.keyDownHandler.bind(this);
             document.addEventListener('keydown', this.keyDownHandler);
             this.keyUpHandler = this.keyUpHandler.bind(this);
@@ -43,42 +50,34 @@ class Ship extends EventTarget {
         }
     }
 
+    //mobile devices controllers
+    swipesHandler(e) {
+        let touch = e.touches[0];
+
+        (touch.clientX > this.touchX) && (this.moveRight = true);
+        (touch.clientX < this.touchX) && (this.moveLeft = true);
+        (touch.clientY < this.touchY) && (this.moveUp = true);
+        (touch.clientY > this.touchY) && (this.moveDown = true);
+        (e.touches.length > 1) && this.shot();
+        
+        this.touchX = touch.clientX;
+        this.touchY = touch.clientY;
+    }
+
+    // desktop devices controllers
     keyDownHandler(e) {
-        (e.key == 'Right' || e.key == 'ArrowRight') && (this.rightPressed = true);
-        (e.key == 'Left' || e.key == 'ArrowLeft') && (this.leftPressed = true);
-        (e.key == 'Up' || e.key == 'ArrowUp') && (this.upPressed = true);
-        (e.key == 'Down' || e.key == 'ArrowDown') && (this.downPressed = true);
+        (e.key == 'Right' || e.key == 'ArrowRight') && (this.moveRight = true);
+        (e.key == 'Left' || e.key == 'ArrowLeft') && (this.moveLeft = true);
+        (e.key == 'Up' || e.key == 'ArrowUp') && (this.moveUp = true);
+        (e.key == 'Down' || e.key == 'ArrowDown') && (this.moveDown = true);
         e.key === " " && this.shot();
     }
     
     keyUpHandler(e) {
-        (e.key == 'Right' || e.key == 'ArrowRight') && (this.rightPressed = false);
-        (e.key == 'Left' || e.key == 'ArrowLeft') && (this.leftPressed = false);
-        (e.key == 'Up' || e.key == 'ArrowUp') && (this.upPressed = false);
-        (e.key == 'Down' || e.key == 'ArrowDown') && (this.downPressed = false);
-    }
-    
-    swipesHandler(e) {
-        let touch = e.touches[0];
-        if(touch.clientX > this.touchX) {
-            this.rightPressed = true;
-            this.touchX = touch.clientX;
-        }
-        if(touch.clientX < this.touchX) {
-            this.leftPressed = true;
-            this.touchX = touch.clientX;
-        }
-        if(touch.clientY < this.touchY) {
-            this.upPressed = true;
-            this.touchY = touch.clientY;
-        }
-        if(touch.clientY > this.touchY) {
-            this.downPressed = true;
-            this.touchY = touch.clientY;
-        }
-        if(e.touches.length > 1) {
-            this.shot();
-        }
+        (e.key == 'Right' || e.key == 'ArrowRight') && (this.moveRight = false);
+        (e.key == 'Left' || e.key == 'ArrowLeft') && (this.moveLeft = false);
+        (e.key == 'Up' || e.key == 'ArrowUp') && (this.moveUp = false);
+        (e.key == 'Down' || e.key == 'ArrowDown') && (this.moveDown = false);
     }
 
     addWeapon(weapon) {
@@ -98,14 +97,12 @@ class Ship extends EventTarget {
 
     update() {
         this.shield <= 0 && this.shipExplosion();
-        (this.rightPressed && (this.x + this.w < SI_GAME.data.w)) && (this.x += this.speed);
-        (this.leftPressed && ( this.x > 0)) && (this.x -= this.speed);
-        (this.downPressed && (this.y + this.h < SI_GAME.data.h)) && (this.y += this.speed);
-        (this.upPressed && (this.y > 0)) && (this.y -= this.speed);
-        this.rightPressed = false;
-        this.leftPressed = false;
-        this.upPressed = false;
-        this.downPressed = false;
+        (this.moveRight && (this.x + this.w < SI_GAME.data.w)) && (this.x += this.speed);
+        (this.moveLeft && ( this.x > 0)) && (this.x -= this.speed);
+        (this.moveDown && (this.y + this.h < SI_GAME.data.h)) && (this.y += this.speed);
+        (this.moveUp && (this.y > 0)) && (this.y -= this.speed);
+
+        (SI_GAME.data.isMobile) && (this.moveUp = this.moveDown = this.moveRight = this.moveLeft = false);
     }
 
     shipExplosion() {
@@ -127,7 +124,6 @@ class Ship extends EventTarget {
         e.owner = 'p1';
         this.dispatchEvent(e);
         this.reload = true;
-        console.log(e.x, e.y);
         setTimeout(() => this.reload = false, this.eqWeapon.reloadTime);
     }
 }
