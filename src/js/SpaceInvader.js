@@ -135,7 +135,6 @@ class SpaceInvader {
         this.ctx.fillText(`Weapon: ${this.ship.eqWeapon.name}`, this.textWeaponX, this.textWeaponY);
         this.ctx.fillText(`Score: ${this.score}`, this.textScoreX, this.textScoreY);
         this.ctx.closePath();
-
     }
 
     handleShot(e) {

@@ -21,7 +21,7 @@ const levels = {
         },
         12: {
             type: 'enemy',
-            index: 0,
+            index: 2,
             number: 1,
             chaser: true
         },
@@ -39,7 +39,7 @@ const levels = {
         },
         25: {
             type: 'enemy',
-            index: 0,
+            index: 1,
             number: 2,
             chaser: false
         },
@@ -51,7 +51,7 @@ const levels = {
         },
         31: {
             type: 'enemy',
-            index: 0,
+            index: 2,
             number: 1,
             chaser: true
         },
@@ -69,7 +69,7 @@ const levels = {
         },
         41: {
             type: 'enemy',
-            index: 0,
+            index: 2,
             number: 2,
             chaser: false
         },
@@ -87,7 +87,7 @@ const levels = {
         },
         50: {
             type: 'enemy',
-            index: 0,
+            index: 1,
             number: 2,
             chaser: false
         },

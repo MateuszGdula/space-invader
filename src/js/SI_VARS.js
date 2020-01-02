@@ -17,8 +17,10 @@ export const assets = {
     missle1: "./assets/missle1.png",
     alien1: "./assets/ship_a1.png",
     alien2: "./assets/ship_a2.png",
+    alien3: "./assets/ship_a3.png",
     missle_a1: "./assets/missle_a1.png",
     missle_a2: "./assets/missle_a2.png",
+    missle_a3: "./assets/missle_a3.png",
     explosion: "./assets/explo.png"
 }
 
@@ -59,6 +61,19 @@ export const gameObjects = (loadedAssets) => {
                     reloadTime: 4000
                 },
                 reward: 300
+            },
+            {
+                asset: loadedAssets.alien3,
+                speed: 1.5,
+                shield: 40,
+                weapon: {
+                    name: "Laser Blaster XYZ123",
+                    asset: loadedAssets.missle_a3,
+                    damage: 5,
+                    speed: 4,
+                    reloadTime: 4000
+                },
+                reward: 150
             }
         ],
     }
