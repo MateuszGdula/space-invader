@@ -83,10 +83,10 @@ class SpaceInvader {
                 switch (type) {
                     case 'enemy':
                         for(let i = 0; i < number; i++) {
-/*                             let alien = new AlienShip(this.ctx, SI_GAME.objects.alienShips[index], this.ship, chaser);
+                            let alien = new AlienShip(this.ctx, SI_GAME.objects.alienShips[index], this.ship, chaser);
                             alien.addEventListener('shot', this.handleShot.bind(this));
                             alien.addEventListener('explosion', this.handleAlienExplosion.bind(this));
-                            this.aliens.push(alien); */
+                            this.aliens.push(alien);
                         }
                         break;
                     case 'weapon':

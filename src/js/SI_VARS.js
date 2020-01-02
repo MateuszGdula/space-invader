@@ -16,7 +16,9 @@ export const assets = {
     ship: "./assets/ship.png",
     missle1: "./assets/missle1.png",
     alien1: "./assets/ship_a1.png",
+    alien2: "./assets/ship_a2.png",
     missle_a1: "./assets/missle_a1.png",
+    missle_a2: "./assets/missle_a2.png",
     explosion: "./assets/explo.png"
 }
 
@@ -44,6 +46,19 @@ export const gameObjects = (loadedAssets) => {
                     reloadTime: 1000
                 },
                 reward: 100
+            },
+            {
+                asset: loadedAssets.alien2,
+                speed: 1,
+                shield: 200,
+                weapon: {
+                    name: "Rocket Launcher WTF-30",
+                    asset: loadedAssets.missle_a2,
+                    damage: 20,
+                    speed: 1.8,
+                    reloadTime: 4000
+                },
+                reward: 300
             }
         ],
     }
