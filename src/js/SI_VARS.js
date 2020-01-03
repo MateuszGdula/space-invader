@@ -15,6 +15,7 @@ export const assets = {
     bg: "./assets/bg.png",
     ship: "./assets/ship.png",
     missle1: "./assets/missle1.png",
+    missle2: "./assets/missle2.png",
     alien1: "./assets/ship_a1.png",
     alien2: "./assets/ship_a2.png",
     alien3: "./assets/ship_a3.png",
@@ -87,6 +88,14 @@ export const weapons = (loadedAssets) => {
             damage: 20,
             speed: 4,
             reloadTime: 100,
+            charges: -1 
+        },
+        {
+            name: "Plasma Blaster BB1k",
+            asset: loadedAssets.missle2,
+            damage: 20,
+            speed: 9,
+            reloadTime: 200,
             charges: -1 
         }
     ]
