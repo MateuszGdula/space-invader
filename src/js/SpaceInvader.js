@@ -14,6 +14,7 @@ import Background from "./Background";
 import Ship from "./Ship";
 import Missle from './Missle';
 import AlienShip from './AlienShip';
+import Explosion from './Explosion';
 import levels from './levels';
 
 class SpaceInvader {
@@ -27,6 +28,7 @@ class SpaceInvader {
         this.bg = new Background(this.ctx, SI_GAME.objects.background);
         this.ship = new Ship(this.ctx, SI_GAME.objects.playerShip);
         this.aliens = [];
+        this.explosions = [];
         this.missles = [];
         this.score = 0;
         this.timer = 0;
@@ -120,6 +122,7 @@ class SpaceInvader {
         this.ship.draw();
         this.missles.forEach(missle => missle.draw());
         this.aliens.forEach(alien => alien.draw());
+        this.explosions.forEach(explosion => explosion.draw());
         this.drawStatus();
 
         this.detectColisions();
@@ -153,6 +156,9 @@ class SpaceInvader {
     }
 
     handleAlienExplosion(e) {
+        let explosion = new Explosion(this.ctx, e.x, e.y, e.w, e.h);
+        this.explosions.push(explosion);
+        console.log(this.explosions);
         this.aliens.splice(this.aliens.indexOf(e.target), 1);
         this.score += e.target.reward;
     }

@@ -49,11 +49,12 @@ class AlienShip extends EventTarget {
     }
 
     shipExplosion() {
-        this.asset = SI_GAME.assets.explosion;
-        this.w += 2.4;
-        this.h += 0.8;
-        this.alpha -= 0.03;
-        this.alpha <= 0 && this.dispatchEvent(new Event('explosion'));
+        let e = new Event('explosion');
+        e.x = this.x;
+        e.y = this.y;
+        e.w = this.w;
+        e.h = this.h;
+        this.dispatchEvent(e);
     }
 
     shot() {

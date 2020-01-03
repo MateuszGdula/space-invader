@@ -93,9 +93,9 @@ export const weapons = (loadedAssets) => {
         {
             name: "Plasma Blaster BB1k",
             asset: loadedAssets.missle2,
-            damage: 20,
+            damage: 35,
             speed: 9,
-            reloadTime: 200,
+            reloadTime: 180,
             charges: -1 
         }
     ]
