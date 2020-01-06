@@ -22,7 +22,8 @@ export const assets = {
     missle_a1: "./assets/missle_a1.png",
     missle_a2: "./assets/missle_a2.png",
     missle_a3: "./assets/missle_a3.png",
-    explosion: "./assets/explo.png"
+    explosion: "./assets/explo.png",
+    shield: "./assets/shieldbox.png"
 }
 
 export const gameObjects = (loadedAssets) => {
@@ -77,6 +78,11 @@ export const gameObjects = (loadedAssets) => {
                 reward: 150
             }
         ],
+        shieldbox: {
+            asset: loadedAssets.shield,
+            speed: 5,
+            quantity: 20
+        }
     }
 }
 

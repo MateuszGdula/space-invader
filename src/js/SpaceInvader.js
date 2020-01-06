@@ -6,6 +6,7 @@ To do:
 4. 
 6. 
 9  Add health booster and weapon boxes
+10. Remove event driven clearing, add clearing function
 5. Add a passibility to switch weapons
 8. New Ships, missles, more levels
 7. Add manifest and sw
@@ -16,6 +17,7 @@ import Ship from "./Ship";
 import Missle from './Missle';
 import AlienShip from './AlienShip';
 import Explosion from './Explosion';
+import ShieldBox from "./ShieldBox";
 import levels from './levels';
 
 class SpaceInvader {
@@ -28,18 +30,23 @@ class SpaceInvader {
         this.ctx = SI_GAME.data.ctx;
         this.bg = new Background(this.ctx, SI_GAME.objects.background);
         this.ship = new Ship(this.ctx, SI_GAME.objects.playerShip);
+
         this.aliens = [];
         this.explosions = [];
         this.missles = [];
-        this.score = 0;
-        this.timer = 0;
+        this.boxes = [];
+
         this.menu = document.querySelector('.menu');
         this.newGameBtn = document.querySelector('.menu__new-game');
         this.resumeBtn = document.querySelector('.menu__resume');
         this.optionsBtn = document.querySelector('.menu__options');
         this.exitBtn = document.querySelector('.menu__exit');
+        
         this.timerInterval = null;
         this.playState = false;
+        this.timer = 0;
+        this.score = 0;
+
         this.textWeaponX = 20;
         this.textWeaponY = SI_GAME.data.h - 20;
         this.textShieldX = 20;
@@ -82,9 +89,10 @@ class SpaceInvader {
             if(!this.playState) return;
 
             if(level[this.timer]) {
-                const { type, index, number, chaser } = level[this.timer];
-                switch (type) {
+                console.log(this.boxes);
+                switch (level[this.timer].type) {
                     case 'enemy':
+                        const { index, number, chaser } = level[this.timer];
                         for(let i = 0; i < number; i++) {
                             let alien = new AlienShip(this.ctx, SI_GAME.objects.alienShips[index], this.ship, chaser);
                             alien.addEventListener('shot', this.handleShot.bind(this));
@@ -92,8 +100,12 @@ class SpaceInvader {
                             this.aliens.push(alien);
                         }
                         break;
-                    case 'weapon':
-                        //spawn weapon box
+                    case 'shieldbox':
+                        console.log('shield')
+                        const { quantity } = level[this.timer];
+                        let box = new ShieldBox(this.ctx, SI_GAME.objects.shieldbox);
+                        box.addEventListener('remove', e => this.boxes.splice(this.boxes.indexOf(e.target), 1));
+                        this.boxes.push(box);
                         break;
                 }
             }
@@ -124,6 +136,7 @@ class SpaceInvader {
         this.missles.forEach(missle => missle.draw());
         this.aliens.forEach(alien => alien.draw());
         this.explosions.forEach(explosion => explosion.draw());
+        this.boxes.forEach(box => box.draw());
         this.drawStatus();
 
         this.detectColisions();

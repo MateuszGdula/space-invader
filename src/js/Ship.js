@@ -12,7 +12,7 @@ class Ship extends EventTarget {
         this.speed = speed;
         this.shield = shield;
         this.w = SI_GAME.data.w * 0.08;
-        this.h = SI_GAME.data.h * 0.06;
+        this.h = SI_GAME.data.h * 0.05;
         this.x = 10;
         this.y = SI_GAME.data.h / 2;
         this.alpha = 1;

@@ -10,7 +10,7 @@ class AlienShip extends EventTarget {
         this.speed = speed - Math.random() / 2;
         this.shield = shield;
         this.w = SI_GAME.data.w * 0.08;
-        this.h = SI_GAME.data.h * 0.06;
+        this.h = SI_GAME.data.h * 0.05;
         this.x = SI_GAME.data.w;
         this.y = 1 + Math.floor(Math.random() * (SI_GAME.data.h - this.h))
         this.target = target;
