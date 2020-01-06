@@ -15,7 +15,6 @@ class AlienShip extends EventTarget {
         this.y = 1 + Math.floor(Math.random() * (SI_GAME.data.h - this.h))
         this.target = target;
         this.chaser = chaser;
-        this.alpha = 1;
         this.reload = false;
         this.weapon = weapon;
         this.reward = reward;
@@ -23,9 +22,7 @@ class AlienShip extends EventTarget {
 
     draw() {
         this.ctx.beginPath();
-        this.ctx.globalAlpha = this.alpha
         this.ctx.drawImage(this.asset, this.x, this.y, this.w, this.h);
-        this.ctx.globalAlpha = 1;
         this.ctx.closePath();
         this.update();
     }

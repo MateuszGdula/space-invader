@@ -5,8 +5,9 @@ To do:
 3. 
 4. 
 6. 
-8. New Ships, missles, more levels
+9  Add health booster and weapon boxes
 5. Add a passibility to switch weapons
+8. New Ships, missles, more levels
 7. Add manifest and sw
 */
 
@@ -157,6 +158,7 @@ class SpaceInvader {
 
     handleAlienExplosion(e) {
         let explosion = new Explosion(this.ctx, e.x, e.y, e.w, e.h);
+        explosion.addEventListener('remove', e => this.explosions.splice(this.explosions.indexOf(e.target), 1));
         this.explosions.push(explosion);
         console.log(this.explosions);
         this.aliens.splice(this.aliens.indexOf(e.target), 1);
@@ -164,7 +166,7 @@ class SpaceInvader {
     }
 
     detectColisions() {
-        
+        //missles collisions
         this.missles.forEach((missle, i) => {
             if(
                 (missle.owner === 'npc') &&
