@@ -2,7 +2,7 @@ class Ship extends EventTarget {
     constructor(ctx, shipData) {
         super();
         this.setVars(ctx, shipData);
-        this.addWeapon(SI_GAME.weapons[1]);
+        this.addWeapon(SI_GAME.weapons[0]);
         this.setListeners();
     }
 

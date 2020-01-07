@@ -23,7 +23,8 @@ export const assets = {
     missle_a2: "./assets/missle_a2.png",
     missle_a3: "./assets/missle_a3.png",
     explosion: "./assets/explo.png",
-    shield: "./assets/shieldbox.png"
+    shield: "./assets/shieldbox.png",
+    weapon: "./assets/weaponbox.png"
 }
 
 export const gameObjects = (loadedAssets) => {
@@ -82,13 +83,9 @@ export const gameObjects = (loadedAssets) => {
             asset: loadedAssets.shield,
             speed: 4
         },
-        weaponBox() {
-            return {
-                asset: loadedAssets.weapon,
-                speed: 3,
-                type: 'weapon',
-                content: SI_GAME.weapons[Math.floor(Math.random() * SI_GAME.weapons.length)]
-            }
+        weaponBox: {
+            asset: loadedAssets.weapon,
+            speed: 3,
         }
     }
 }

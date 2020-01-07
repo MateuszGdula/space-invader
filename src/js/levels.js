@@ -2,7 +2,7 @@
 const levels = {
     level1: {
         10: {
-            type: 'shieldbox'
+            type: 'weaponbox'
         },
         2: {
             type: 'enemy',

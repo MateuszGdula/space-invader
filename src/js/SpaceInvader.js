@@ -19,6 +19,7 @@ import AlienShip from './AlienShip';
 import Explosion from './Explosion';
 import ShieldBox from "./ShieldBox";
 import levels from './levels';
+import WeaponBox from "./WeaponBox";
 
 class SpaceInvader {
     constructor() {
@@ -100,9 +101,14 @@ class SpaceInvader {
                         }
                         break;
                     case 'shieldbox':
-                        let box = new ShieldBox(this.ctx, SI_GAME.objects.shieldBox);
-                        box.addEventListener('remove', e => this.boxes.splice(this.boxes.indexOf(e.target), 1));
-                        this.boxes.push(box);
+                        let shieldBox = new ShieldBox(this.ctx, SI_GAME.objects.shieldBox);
+                        shieldBox.addEventListener('remove', e => this.boxes.splice(this.boxes.indexOf(e.target), 1));
+                        this.boxes.push(shieldBox);
+                        break;
+                    case 'weaponbox':
+                        let weaponBox = new WeaponBox(this.ctx, SI_GAME.objects.weaponBox);
+                        weaponBox.addEventListener('remove', e => this.boxes.splice(this.boxes.indexOf(e.target), 1));
+                        this.boxes.push(weaponBox);
                         break;
                 }
             }
@@ -209,8 +215,8 @@ class SpaceInvader {
                 (box.y < this.ship.y + this.ship.h) &&
                 (box.y > this.ship.y)
             ) {
-                console.log(box.content.shield);
                 box.content.shield && (this.ship.shield = Math.min(this.ship.shield + box.content.shield, 100));
+                box.content.weapon && this.ship.addWeapon(box.content.weapon);
                 this.boxes.splice(i, 1);
             }
         });
