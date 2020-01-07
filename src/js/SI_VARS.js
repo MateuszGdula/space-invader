@@ -78,10 +78,17 @@ export const gameObjects = (loadedAssets) => {
                 reward: 150
             }
         ],
-        shieldbox: {
+        shieldBox: {
             asset: loadedAssets.shield,
-            speed: 5,
-            quantity: 20
+            speed: 4
+        },
+        weaponBox() {
+            return {
+                asset: loadedAssets.weapon,
+                speed: 3,
+                type: 'weapon',
+                content: SI_GAME.weapons[Math.floor(Math.random() * SI_GAME.weapons.length)]
+            }
         }
     }
 }

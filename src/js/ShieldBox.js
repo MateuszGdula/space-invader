@@ -1,18 +1,19 @@
 class ShieldBox extends EventTarget {
-    constructor(ctx, { asset, speed, quantity }) {
+    constructor(ctx, { asset, speed }) {
         super();
         this.ctx = ctx;
         this.asset = asset
         this.speed = speed;
-        this.quantity = quantity;
         this.w = SI_GAME.data.w * 0.04;
         this.h = SI_GAME.data.h * 0.04;
         this.x = SI_GAME.data.w;
         this.y = 1 + Math.floor(Math.random() * (SI_GAME.data.h - this.h));
+        this.content = {
+            shield: 10 + Math.round(Math.random() * 30)
+        }
     }
     
     draw() {
-        console.log('box');
         this.ctx.beginPath();
         this.ctx.drawImage(this.asset, this.x, this.y, this.w, this.h);
         this.ctx.closePath();
@@ -20,13 +21,8 @@ class ShieldBox extends EventTarget {
     }
 
     update() {
-        this.x += this.speed;
-        if (
-            this.x + this.w > SI_GAME.data.w ||
-            this.x < 0 ||
-            this.y + this.h > SI_GAME.data.h ||
-            this.y < 0
-            ) {
+        this.x -= this.speed;
+        if (this.x + this.w < 0) {
                 let e = new Event('remove');
                 this.dispatchEvent(e);
             }

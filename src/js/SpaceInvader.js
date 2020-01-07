@@ -66,7 +66,7 @@ class SpaceInvader {
                 document.querySelector('main').requestFullscreen();
                 screen.orientation.lock('landscape');
             }
-            this.start(levels.level1);
+            this.play(levels.level1);
             this.menu.classList.toggle('open');
         });
         this.resumeBtn.addEventListener('click', e => {
@@ -83,13 +83,12 @@ class SpaceInvader {
         this.menu.classList.toggle('open');
     }
 
-    start(level) {
+    play(level) {
         this.playState = true;
         this.timerInterval = setInterval(() => {
             if(!this.playState) return;
 
             if(level[this.timer]) {
-                console.log(this.boxes);
                 switch (level[this.timer].type) {
                     case 'enemy':
                         const { index, number, chaser } = level[this.timer];
@@ -101,9 +100,7 @@ class SpaceInvader {
                         }
                         break;
                     case 'shieldbox':
-                        console.log('shield')
-                        const { quantity } = level[this.timer];
-                        let box = new ShieldBox(this.ctx, SI_GAME.objects.shieldbox);
+                        let box = new ShieldBox(this.ctx, SI_GAME.objects.shieldBox);
                         box.addEventListener('remove', e => this.boxes.splice(this.boxes.indexOf(e.target), 1));
                         this.boxes.push(box);
                         break;
@@ -202,6 +199,19 @@ class SpaceInvader {
                         this.missles.splice(i, 1);
                     }
                 })
+            }
+        });
+        //boxes collisions
+        this.boxes.forEach((box, i) => {
+            if(
+                (box.x < this.ship.x + this.ship.w) &&
+                (box.x > this.ship.x) &&
+                (box.y < this.ship.y + this.ship.h) &&
+                (box.y > this.ship.y)
+            ) {
+                console.log(box.content.shield);
+                box.content.shield && (this.ship.shield = Math.min(this.ship.shield + box.content.shield, 100));
+                this.boxes.splice(i, 1);
             }
         });
     }
