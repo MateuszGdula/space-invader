@@ -23,6 +23,9 @@ class AlienShip extends EventTarget {
     draw() {
         this.ctx.beginPath();
         this.ctx.drawImage(this.asset, this.x, this.y, this.w, this.h);
+        this.ctx.strokeStyle = "#FF0000";
+        this.ctx.lineWidth = 2;
+        this.ctx.strokeRect(this.x, this.y, this.w, this.h);
         this.ctx.closePath();
         this.update();
     }
@@ -31,26 +34,48 @@ class AlienShip extends EventTarget {
         this.shield <=0 && this.shipExplosion();
         this.x -= this.speed;
         
-        (
+        //follow players ship when chaser flag is true
+        if (
             this.chaser &&
             (this.target.y + this.target.h / 2) > (this.y + this.h / 2)
-        ) ? 
-        this.y += this.speed / 2 :
-        this.chaser && (this.y -= this.speed / 2);
+        ) {
+            this.y += this.speed / 2
+        } else if (
+            this.chaser &&
+            (this.target.y + this.target.h / 2) < (this.y + this.h / 2)
+        ) {
+            this.y -= this.speed / 2
+        }
 
-        (
+        //shot when players ship is in the range
+        if (
             (this.target.y < this.y + this.h / 2) &&
             (this.target.y + this.target.h > this.y + this.h / 2) &&
             (this.target.x + this.target.w < this.x)
-        ) && this.shot(); 
+        ) {
+            this.shot();
+        } 
+
+        //remove ship when it leaves the window
+        if (
+            this.x > SI_GAME.data.w ||
+            this.x + this.w < 0 ||
+            this.y > SI_GAME.data.h ||
+            this.y + this.h < 0
+        ) {
+            let e = new Event('remove');
+            this.dispatchEvent(e);
+        }
     }
 
     shipExplosion() {
         let e = new Event('explosion');
-        e.x = this.x;
-        e.y = this.y;
-        e.w = this.w;
-        e.h = this.h;
+        let explosionData = {};
+        explosionData.x = this.x;
+        explosionData.y = this.y;
+        explosionData.w = this.w;
+        explosionData.h = this.h;
+        e.explosionData = explosionData;
         this.dispatchEvent(e);
     }
 

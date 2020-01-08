@@ -28,15 +28,16 @@ class Missle extends EventTarget {
 
     update() {
         this.x += this.speed;
+        
         if (
-            this.x + this.w > SI_GAME.data.w ||
-            this.x < 0 ||
-            this.y + this.h > SI_GAME.data.h ||
-            this.y < 0
-            ) {
-                let e = new Event('remove');
-                this.dispatchEvent(e);
-            }
+            this.x > SI_GAME.data.w ||
+            this.x + this.w < 0 ||
+            this.y > SI_GAME.data.h ||
+            this.y + this.h < 0
+        ) {
+            let e = new Event('remove');
+            this.dispatchEvent(e);
+        }
     }
 }
 

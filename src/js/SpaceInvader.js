@@ -6,7 +6,8 @@ To do:
 4. 
 6. 
 9 
-11. add size for missles
+11.
+12. ships size
 10. Remove event driven clearing, add clearing function
 5. Add a passibility to switch weapons
 8. New Ships, missles, more levels
@@ -97,6 +98,7 @@ class SpaceInvader {
                             let alien = new AlienShip(this.ctx, SI_GAME.objects.alienShips[index], this.ship, chaser);
                             alien.addEventListener('shot', this.handleShot.bind(this));
                             alien.addEventListener('explosion', this.handleAlienExplosion.bind(this));
+                            alien.addEventListener('remove', e => this.aliens.splice(this.aliens.indexOf(e.target), 1));
                             this.aliens.push(alien);
                         }
                         break;
@@ -169,7 +171,7 @@ class SpaceInvader {
     }
 
     handleAlienExplosion(e) {
-        let explosion = new Explosion(this.ctx, e.x, e.y, e.w, e.h);
+        let explosion = new Explosion(this.ctx, e.explosionData);
         explosion.addEventListener('remove', e => this.explosions.splice(this.explosions.indexOf(e.target), 1));
         this.explosions.push(explosion);
         this.aliens.splice(this.aliens.indexOf(e.target), 1);

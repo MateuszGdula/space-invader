@@ -15,7 +15,6 @@ class Ship extends EventTarget {
         this.h = SI_GAME.data.h * 0.05;
         this.x = 10;
         this.y = SI_GAME.data.h / 2;
-        this.alpha = 1;
         this.moveRight = false;
         this.moveLeft = false;
         this.moveUp = false;
@@ -88,9 +87,10 @@ class Ship extends EventTarget {
 
     draw() {
         this.ctx.beginPath();
-        this.ctx.globalAlpha = this.alpha
         this.ctx.drawImage(this.asset, this.x, this.y, this.w, this.h);
-        this.ctx.globalAlpha = 1;
+        this.ctx.strokeStyle = "#FF0000";
+        this.ctx.lineWidth = 2;
+        this.ctx.strokeRect(this.x, this.y, this.w, this.h);
         this.ctx.closePath();
         this.update();
     }

@@ -19,8 +19,7 @@ class Box extends EventTarget {
 
     createContent() {
         this.type === 'shield' && (this.content = { shield: 10 + Math.round(Math.random() * 30) });
-        //this.type === 'weapon' && (this.content = { weapon: SI_GAME.weapons[Math.floor(Math.random() * SI_GAME.weapons.length)] })
-        this.type === 'weapon' && (this.content = { weapon: SI_GAME.weapons[1] })
+        this.type === 'weapon' && (this.content = { weapon: SI_GAME.weapons[Math.floor(Math.random() * SI_GAME.weapons.length)] })
     }
     
     draw() {
@@ -32,10 +31,11 @@ class Box extends EventTarget {
 
     update() {
         this.x -= this.speed;
+
         if (this.x + this.w < 0) {
-                let e = new Event('remove');
-                this.dispatchEvent(e);
-            }
+            let e = new Event('remove');
+            this.dispatchEvent(e);
+        }
     }
 }
 
