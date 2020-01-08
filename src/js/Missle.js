@@ -1,14 +1,14 @@
 class Missle extends EventTarget {
-    constructor(ctx, asset, x, y, speed, dmg, owner) {
+    constructor(ctx, missleData) {
         super();
-        this.setVars(ctx, asset, x, y, speed, dmg, owner);
+        this.setVars(ctx, missleData);
     }
 
-    setVars(ctx, asset, x, y, speed, dmg, owner) {
+    setVars(ctx, { asset, w, h, x, y, speed, dmg, owner }) {
         this.ctx = ctx;
         this.asset = asset;
-        this.w = SI_GAME.data.w * 0.02;
-        this.h = SI_GAME.data.h * 0.01;
+        this.w = SI_GAME.data.w * w;
+        this.h = SI_GAME.data.h * h;
         this.x = x
         this.y = y
         this.speed = speed;
@@ -19,6 +19,9 @@ class Missle extends EventTarget {
     draw() {
         this.ctx.beginPath();
         this.ctx.drawImage(this.asset, this.x, this.y /* this.w, this.h */);
+        this.ctx.strokeStyle = "#FF0000";
+        this.ctx.lineWidth = 2;
+        this.ctx.strokeRect(this.x, this.y, this.w, this.h);
         this.ctx.closePath();
         this.update();
     }

@@ -46,6 +46,8 @@ export const gameObjects = (loadedAssets) => {
                 weapon: {
                     name: "Blaster WTF-30",
                     asset: loadedAssets.missle_a1,
+                    w: 0.02,
+                    h: 0.01,
                     damage: 10,
                     speed: 3,
                     reloadTime: 1000
@@ -59,6 +61,8 @@ export const gameObjects = (loadedAssets) => {
                 weapon: {
                     name: "Rocket Launcher WTF-30",
                     asset: loadedAssets.missle_a2,
+                    w: 0.02,
+                    h: 0.02,
                     damage: 20,
                     speed: 1.8,
                     reloadTime: 4000
@@ -72,6 +76,8 @@ export const gameObjects = (loadedAssets) => {
                 weapon: {
                     name: "Laser Blaster XYZ123",
                     asset: loadedAssets.missle_a3,
+                    w: 0.06,
+                    h: 0.06,
                     damage: 5,
                     speed: 4,
                     reloadTime: 4000
@@ -97,6 +103,8 @@ export const weapons = (loadedAssets) => {
         {
             name: "Blaster WTF-40",
             asset: loadedAssets.missle1,
+            w: 0.02,
+            h: 0.01,
             damage: 20,
             speed: 4,
             reloadTime: 100,
@@ -105,6 +113,8 @@ export const weapons = (loadedAssets) => {
         {
             name: "Plasma Blaster BB1k",
             asset: loadedAssets.missle2,
+            w: 0.07,
+            h: 0.07,
             damage: 35,
             speed: 9,
             reloadTime: 180,

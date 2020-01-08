@@ -57,12 +57,16 @@ class AlienShip extends EventTarget {
     shot() {
         if(this.reload) return;
         let e  = new Event('shot');
-        e.x = this.x;
-        e.y = this.y + Math.round(this.h / 2);
-        e.asset = this.weapon.asset;
-        e.speed = this.weapon.speed * -1;
-        e.dmg = this.weapon.damage;
-        e.owner = 'npc';
+        let missleData = {};
+        missleData.asset = this.weapon.asset;
+        missleData.w = this.weapon.w;
+        missleData.h = this.weapon.h;
+        missleData.x = this.x;
+        missleData.y = this.y + Math.round(this.h / 2);
+        missleData.speed = this.weapon.speed * -1;
+        missleData.dmg = this.weapon.damage;
+        missleData.owner = 'npc';
+        e.missleData = missleData;
         this.dispatchEvent(e);
         this.reload = true;
         setTimeout(() => this.reload = false, this.weapon.reloadTime);

@@ -2,7 +2,7 @@ class Ship extends EventTarget {
     constructor(ctx, shipData) {
         super();
         this.setVars(ctx, shipData);
-        this.addWeapon(SI_GAME.weapons[0]);
+        this.addWeapon(SI_GAME.weapons[1]);
         this.setListeners();
     }
 
@@ -116,12 +116,16 @@ class Ship extends EventTarget {
     shot() {
         if(this.reload) return
         let e  = new Event('shot');
-        e.x = this.x + this.w;
-        e.y = this.y + Math.round(this.h / 2);
-        e.asset = this.eqWeapon.asset;
-        e.speed = this.eqWeapon.speed;
-        e.dmg = this.eqWeapon.damage;
-        e.owner = 'p1';
+        let missleData = {};
+        missleData.asset = this.eqWeapon.asset;
+        missleData.w = this.eqWeapon.w;
+        missleData.h = this.eqWeapon.h;
+        missleData.x = this.x + this.w;
+        missleData.y = this.y + Math.round(this.h / 2);
+        missleData.speed = this.eqWeapon.speed;
+        missleData.dmg = this.eqWeapon.damage;
+        missleData.owner = 'p1';
+        e.missleData = missleData;
         this.dispatchEvent(e);
         this.reload = true;
         setTimeout(() => this.reload = false, this.eqWeapon.reloadTime);

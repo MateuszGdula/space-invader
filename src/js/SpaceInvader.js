@@ -154,7 +154,7 @@ class SpaceInvader {
     }
 
     handleShot(e) {
-        let missle = new Missle(this.ctx, e.asset, e.x, e.y, e.speed, e.dmg, e.owner);
+        let missle = new Missle(this.ctx, e.missleData);
         this.missles.push(missle);
 
         let removeHandler = e => {
@@ -172,7 +172,6 @@ class SpaceInvader {
         let explosion = new Explosion(this.ctx, e.x, e.y, e.w, e.h);
         explosion.addEventListener('remove', e => this.explosions.splice(this.explosions.indexOf(e.target), 1));
         this.explosions.push(explosion);
-        console.log(this.explosions);
         this.aliens.splice(this.aliens.indexOf(e.target), 1);
         this.score += e.target.reward;
     }
