@@ -5,7 +5,8 @@ To do:
 3. 
 4. 
 6. 
-9  Add health booster and weapon boxes
+9 
+11. add size for missles
 10. Remove event driven clearing, add clearing function
 5. Add a passibility to switch weapons
 8. New Ships, missles, more levels
@@ -17,9 +18,8 @@ import Ship from "./Ship";
 import Missle from './Missle';
 import AlienShip from './AlienShip';
 import Explosion from './Explosion';
-import ShieldBox from "./ShieldBox";
+import Box from "./Box";
 import levels from './levels';
-import WeaponBox from "./WeaponBox";
 
 class SpaceInvader {
     constructor() {
@@ -100,15 +100,11 @@ class SpaceInvader {
                             this.aliens.push(alien);
                         }
                         break;
-                    case 'shieldbox':
-                        let shieldBox = new ShieldBox(this.ctx, SI_GAME.objects.shieldBox);
-                        shieldBox.addEventListener('remove', e => this.boxes.splice(this.boxes.indexOf(e.target), 1));
-                        this.boxes.push(shieldBox);
-                        break;
-                    case 'weaponbox':
-                        let weaponBox = new WeaponBox(this.ctx, SI_GAME.objects.weaponBox);
-                        weaponBox.addEventListener('remove', e => this.boxes.splice(this.boxes.indexOf(e.target), 1));
-                        this.boxes.push(weaponBox);
+                    case 'box':
+                        const { content } = level[this.timer];
+                        let box = new Box(this.ctx, SI_GAME.objects[content]);
+                        box.addEventListener('remove', e => this.boxes.splice(this.boxes.indexOf(e.target), 1));
+                        this.boxes.push(box);
                         break;
                 }
             }
@@ -215,8 +211,8 @@ class SpaceInvader {
                 (box.y < this.ship.y + this.ship.h) &&
                 (box.y > this.ship.y)
             ) {
-                box.content.shield && (this.ship.shield = Math.min(this.ship.shield + box.content.shield, 100));
-                box.content.weapon && this.ship.addWeapon(box.content.weapon);
+                box.type === 'shield' && (this.ship.shield = Math.min(this.ship.shield + box.content.shield, 100));
+                box.type === 'weapon' && this.ship.addWeapon(box.content.weapon);
                 this.boxes.splice(i, 1);
             }
         });

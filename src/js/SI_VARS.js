@@ -79,13 +79,15 @@ export const gameObjects = (loadedAssets) => {
                 reward: 150
             }
         ],
-        shieldBox: {
+        shield: {
             asset: loadedAssets.shield,
-            speed: 4
+            speed: 4,
+            type: 'shield'
         },
-        weaponBox: {
+        weapon: {
             asset: loadedAssets.weapon,
             speed: 3,
+            type: 'weapon'
         }
     }
 }
