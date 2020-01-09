@@ -121,7 +121,7 @@ class Ship extends EventTarget {
         missleData.w = this.eqWeapon.w;
         missleData.h = this.eqWeapon.h;
         missleData.x = this.x + this.w;
-        missleData.y = this.y + Math.round(this.h / 2);
+        missleData.y = this.y + Math.round(this.h / 2) - Math.round(this.eqWeapon.h * SI_GAME.data.h / 2);
         missleData.speed = this.eqWeapon.speed;
         missleData.dmg = this.eqWeapon.damage;
         missleData.owner = 'p1';

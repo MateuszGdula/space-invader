@@ -87,7 +87,7 @@ class AlienShip extends EventTarget {
         missleData.w = this.weapon.w;
         missleData.h = this.weapon.h;
         missleData.x = this.x;
-        missleData.y = this.y + Math.round(this.h / 2);
+        missleData.y = this.y + Math.round(this.h / 2) - Math.round(this.weapon.h * SI_GAME.data.h / 2);
         missleData.speed = this.weapon.speed * -1;
         missleData.dmg = this.weapon.damage;
         missleData.owner = 'npc';
