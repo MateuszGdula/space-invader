@@ -7,8 +7,8 @@ To do:
 6. 
 9 
 11.
-12. ships size
-10. Remove event driven clearing, add clearing function
+12.
+10.
 5. Add a passibility to switch weapons
 8. New Ships, missles, more levels
 7. Add manifest and sw
@@ -184,9 +184,9 @@ class SpaceInvader {
             if(
                 (missle.owner === 'npc') &&
                 (missle.x < this.ship.x + this.ship.w) &&
-                (missle.x > this.ship.x) &&
+                (missle.x + missle.w > this.ship.x) &&
                 (missle.y < this.ship.y + this.ship.h) &&
-                (missle.y > this.ship.y)
+                (missle.y + missle.h > this.ship.y)
             ) {
                 this.ship.shield -= missle.dmg;
                 this.missles.splice(i, 1);
@@ -208,9 +208,9 @@ class SpaceInvader {
         this.boxes.forEach((box, i) => {
             if(
                 (box.x < this.ship.x + this.ship.w) &&
-                (box.x > this.ship.x) &&
+                (box.x + box.h > this.ship.x) &&
                 (box.y < this.ship.y + this.ship.h) &&
-                (box.y > this.ship.y)
+                (box.y + box.h> this.ship.y)
             ) {
                 box.type === 'shield' && (this.ship.shield = Math.min(this.ship.shield + box.content.shield, 100));
                 box.type === 'weapon' && this.ship.addWeapon(box.content.weapon);
