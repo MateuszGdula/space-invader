@@ -11,7 +11,7 @@ class Box extends EventTarget {
         this.speed = speed;
         this.type = type;
         this.w = SI_GAME.data.w * 0.04;
-        this.h = SI_GAME.data.h * 0.04;
+        this.h = this.w;
         this.x = SI_GAME.data.w;
         this.y = 1 + Math.floor(Math.random() * (SI_GAME.data.h - this.h));
         this.content = {}

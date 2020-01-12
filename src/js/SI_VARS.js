@@ -8,7 +8,8 @@ export const data = {
     ctx: canvas.getContext('2d'),
     w: canvas.width,
     h: canvas.height,
-    isMobile: /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+    isMobile: /iPhone|iPad|iPod|Android/i.test(navigator.userAgent),
+    statusBarHeight: 60
 }
 
 export const assets = {
@@ -19,12 +20,15 @@ export const assets = {
     alien1: "./assets/ship_a1.png",
     alien2: "./assets/ship_a2.png",
     alien3: "./assets/ship_a3.png",
-    missle_a1: "./assets/missle_a1.png",
-    missle_a2: "./assets/missle_a2.png",
-    missle_a3: "./assets/missle_a3.png",
+    missleA1: "./assets/missle_a1.png",
+    missleA2: "./assets/missle_a2.png",
+    missleA3: "./assets/missle_a3.png",
     explosion: "./assets/explo.png",
     shield: "./assets/shieldbox.png",
-    weapon: "./assets/weaponbox.png"
+    weapon: "./assets/weaponbox.png",
+    scoreIcon: "./assets/score-icon.png",
+    shieldIcon: "./assets/shield-icon.png",
+    weaponIcon: "./assets/weapon-icon.png",
 }
 
 export const gameObjects = (loadedAssets) => {
@@ -45,7 +49,7 @@ export const gameObjects = (loadedAssets) => {
                 shield: 100,
                 weapon: {
                     name: "Blaster WTF-30",
-                    asset: loadedAssets.missle_a1,
+                    asset: loadedAssets.missleA1,
                     w: 0.02,
                     h: 0.01,
                     damage: 10,
@@ -60,7 +64,7 @@ export const gameObjects = (loadedAssets) => {
                 shield: 200,
                 weapon: {
                     name: "Rocket Launcher WTF-30",
-                    asset: loadedAssets.missle_a2,
+                    asset: loadedAssets.missleA2,
                     w: 0.02,
                     h: 0.02,
                     damage: 20,
@@ -75,7 +79,7 @@ export const gameObjects = (loadedAssets) => {
                 shield: 40,
                 weapon: {
                     name: "Laser Blaster XYZ123",
-                    asset: loadedAssets.missle_a3,
+                    asset: loadedAssets.missleA3,
                     w: 0.06,
                     h: 0.06,
                     damage: 5,

@@ -10,12 +10,15 @@ To do:
 12.
 10.
 5. Add a passibility to switch weapons
+13. Block show menu on back btn (mobiles)
+14. Refactor the menu
 8. New Ships, missles, more levels
 7. Add manifest and sw
 */
 
 import Background from "./Background";
 import Ship from "./Ship";
+import StatusBar from "./StatusBar";
 import Missle from './Missle';
 import AlienShip from './AlienShip';
 import Explosion from './Explosion';
@@ -32,6 +35,7 @@ class SpaceInvader {
         this.ctx = SI_GAME.data.ctx;
         this.bg = new Background(this.ctx, SI_GAME.objects.background);
         this.ship = new Ship(this.ctx, SI_GAME.objects.playerShip);
+        this.statusBar = new StatusBar(this.ctx);
 
         this.aliens = [];
         this.explosions = [];
@@ -48,13 +52,6 @@ class SpaceInvader {
         this.playState = false;
         this.timer = 0;
         this.score = 0;
-
-        this.textWeaponX = 20;
-        this.textWeaponY = SI_GAME.data.h - 20;
-        this.textShieldX = 20;
-        this.textShieldY = SI_GAME.data.h - 40;
-        this.textScoreX = 20;
-        this.textScoreY = SI_GAME.data.h - 60;
     }
 
     setListeners() {
@@ -138,21 +135,11 @@ class SpaceInvader {
         this.aliens.forEach(alien => alien.draw());
         this.explosions.forEach(explosion => explosion.draw());
         this.boxes.forEach(box => box.draw());
-        this.drawStatus();
+        this.statusBar.draw(this.score, this.ship.shield, this.ship.eqWeapon.name);
 
         this.detectColisions();
         
         this.playState && requestAnimationFrame(() => this.drawFrame());
-    }
-
-    drawStatus() {
-        this.ctx.beginPath();
-        this.ctx.font = '18px Arial';
-        this.ctx.fillStyle = '#ffffff'
-        this.ctx.fillText(`Shield: ${Math.max(0, this.ship.shield)}%`, this.textShieldX, this.textShieldY);
-        this.ctx.fillText(`Weapon: ${this.ship.eqWeapon.name}`, this.textWeaponX, this.textWeaponY);
-        this.ctx.fillText(`Score: ${this.score}`, this.textScoreX, this.textScoreY);
-        this.ctx.closePath();
     }
 
     handleShot(e) {
