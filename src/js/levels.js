@@ -1,6 +1,10 @@
 // game levels: key is spawn time in seconds, value is object containing spawned thing details
 const levels = {
     level1: {
+        0: {
+            type: 'box',
+            content: 'weapon'
+        },
         2: {
             type: 'enemy',
             index: 0,

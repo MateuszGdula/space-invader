@@ -33,7 +33,7 @@ class StatusBar {
         this.weaponIconSize = 20;
     }
 
-    draw(score, shield, weapon) {
+    draw(score, shield, { name, charges }) {
         this.ctx.beginPath();
 
         this.ctx.fillStyle ='#773819';
@@ -49,7 +49,7 @@ class StatusBar {
         this.ctx.fillText(`Shield: ${Math.max(0, shield)}%`, this.shieldX, this.shieldY);
 
         this.ctx.font = '24px Arial';
-        this.ctx.fillText(`Weapon: ${weapon}`, this.weaponX, this.weaponY);
+        this.ctx.fillText(`Weapon: ${name} (${charges} charges)`, this.weaponX, this.weaponY);
 
         this.ctx.drawImage(this.scoreIcon, this.scoreIconX, this.scoreIconY, this.scoreIconSize, this.scoreIconSize);
         this.ctx.drawImage(this.shieldIcon, this.shieldIconX, this.shieldIconY, this.shieldIconSize, this.shieldIconSize);

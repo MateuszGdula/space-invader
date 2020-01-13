@@ -18,8 +18,12 @@ class Box extends EventTarget {
     }
 
     createContent() {
-        this.type === 'shield' && (this.content = { shield: 10 + Math.round(Math.random() * 30) });
-        this.type === 'weapon' && (this.content = { weapon: SI_GAME.weapons[Math.floor(Math.random() * SI_GAME.weapons.length)] })
+        if(this.type === 'shield') {
+            this.content = { shield: 10 + Math.round(Math.random() * 30) };
+        } else if(this.type === 'weapon') {
+            let i = Math.floor(Math.random() * (SI_GAME.weapons.length - 1)) + 1;
+            this.content = { weapon: SI_GAME.weapons[i] };
+        };
     }
     
     draw() {

@@ -112,7 +112,7 @@ export const weapons = (loadedAssets) => {
             damage: 20,
             speed: 4,
             reloadTime: 100,
-            charges: -1 
+            charges: 'UNLIMITED' 
         },
         {
             name: "Plasma Blaster BB1k",
@@ -122,7 +122,7 @@ export const weapons = (loadedAssets) => {
             damage: 35,
             speed: 9,
             reloadTime: 180,
-            charges: -1 
+            charges: 100
         }
     ]
 }

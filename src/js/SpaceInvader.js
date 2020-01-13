@@ -135,7 +135,7 @@ class SpaceInvader {
         this.aliens.forEach(alien => alien.draw());
         this.explosions.forEach(explosion => explosion.draw());
         this.boxes.forEach(box => box.draw());
-        this.statusBar.draw(this.score, this.ship.shield, this.ship.eqWeapon.name);
+        this.statusBar.draw(this.score, this.ship.shield, this.ship.eqWeapon);
 
         this.detectColisions();
         

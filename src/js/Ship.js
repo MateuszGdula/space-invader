@@ -2,7 +2,7 @@ class Ship extends EventTarget {
     constructor(ctx, shipData) {
         super();
         this.setVars(ctx, shipData);
-        this.addWeapon(SI_GAME.weapons[1]);
+        this.addWeapon(SI_GAME.weapons[0]);
         this.setListeners();
     }
 
@@ -70,6 +70,7 @@ class Ship extends EventTarget {
         (e.key == 'Up' || e.key == 'ArrowUp') && (this.moveUp = true);
         (e.key == 'Down' || e.key == 'ArrowDown') && (this.moveDown = true);
         e.key === " " && this.shot();
+        e.key === "Control" && this.switchWeapon();
     }
     
     keyUpHandler(e) {
@@ -80,9 +81,31 @@ class Ship extends EventTarget {
     }
 
     addWeapon(weapon) {
-        const newWeapon = {...weapon}
-        this.weapons.push(newWeapon);
-        this.eqWeapon = newWeapon;
+        const newWeapon = {...weapon};
+        let isDuplicated = false;
+        let duplicatedIndex;
+
+        for(const [i, weapon] of this.weapons.entries()) {
+            if(weapon.name === newWeapon.name) {
+                isDuplicated = true;
+                duplicatedIndex = i;
+                break;
+            };
+        }
+        
+        if(isDuplicated) {
+            this.weapons[duplicatedIndex].charges += newWeapon.charges;
+            console.log(this.weapons[duplicatedIndex]);
+        } else {
+            this.weapons.push(newWeapon);
+            this.eqWeapon = newWeapon;
+        }
+    }
+
+    switchWeapon() {
+        let curentIndex = this.weapons.indexOf(this.eqWeapon);
+        let nextIndex = curentIndex === this.weapons.length -1 ? 0 : curentIndex +1;
+        this.eqWeapon = this.weapons[nextIndex];
     }
 
     draw() {
@@ -114,7 +137,7 @@ class Ship extends EventTarget {
     }
 
     shot() {
-        if(this.reload) return
+        if(this.reload || this.eqWeapon.charges === 0) return;
         let e  = new Event('shot');
         let missleData = {};
         missleData.asset = this.eqWeapon.asset;
@@ -127,6 +150,7 @@ class Ship extends EventTarget {
         missleData.owner = 'p1';
         e.missleData = missleData;
         this.dispatchEvent(e);
+        this.eqWeapon.charges !== 'UNLIMITED' && this.eqWeapon.charges --;
         this.reload = true;
         setTimeout(() => this.reload = false, this.eqWeapon.reloadTime);
     }
