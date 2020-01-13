@@ -7,7 +7,7 @@ canvas.height = canvasHeight;
 export const data = {
     ctx: canvas.getContext('2d'),
     w: canvas.width,
-    h: canvas.height,
+    h: canvas.height - 60,
     isMobile: /iPhone|iPad|iPod|Android/i.test(navigator.userAgent),
     statusBarHeight: 60
 }

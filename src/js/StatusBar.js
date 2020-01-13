@@ -6,16 +6,16 @@ class StatusBar {
     setVars(ctx) {
         this.ctx = ctx;
         this.x = 0;
-        this.y = SI_GAME.data.h - SI_GAME.data.statusBarHeight
+        this.y = SI_GAME.data.h;
         this.w = SI_GAME.data.w;
         this.h = SI_GAME.data.statusBarHeight;
 
         this.scoreX = 30;
-        this.scoreY = SI_GAME.data.h - 35;
+        this.scoreY = SI_GAME.data.h + 25;
         this.shieldX = 30;
-        this.shieldY = SI_GAME.data.h - 15;
+        this.shieldY = SI_GAME.data.h + 45;
         this.weaponX = 240;
-        this.weaponY = SI_GAME.data.h - 20;
+        this.weaponY = SI_GAME.data.h + 40;
 
         this.scoreIcon = SI_GAME.assets.scoreIcon;
         this.scoreIconX = this.scoreX - 15;
@@ -41,7 +41,7 @@ class StatusBar {
 
         this.ctx.strokeStyle ='#21636c';
         this.ctx.lineWidth = 4;
-        this.ctx.strokeRect(this.x, this.y, this.w, this.h);
+        this.ctx.strokeRect(this.x, this.y + 2, this.w, this.h);
 
         this.ctx.font = '18px Arial';
         this.ctx.fillStyle = '#FFFFFF'
