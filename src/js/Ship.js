@@ -25,10 +25,13 @@ class Ship extends EventTarget {
     }
     
     setListeners() {
-        if(SI_GAME.data.isMobile) {
+        if(/* SI_GAME.data.isMobile */true) {
             //listeners for mobile devices
-            this.shot = this.shot.bind(this);
-            document.addEventListener('click', this.shot);
+            document.addEventListener('click', e => {
+                e.clientY > SI_GAME.data.h ? this.switchWeapon() : this.shot();
+                alert(`${e.clientY} ${SI_GAME.data.h}`);
+            });
+
             this.swipesHandler = this.swipesHandler.bind(this);
             document.addEventListener('touchmove', this.swipesHandler);
 
@@ -111,9 +114,6 @@ class Ship extends EventTarget {
     draw() {
         this.ctx.beginPath();
         this.ctx.drawImage(this.asset, this.x, this.y, this.w, this.h);
-        this.ctx.strokeStyle = "#FF0000";
-        this.ctx.lineWidth = 2;
-        this.ctx.strokeRect(this.x, this.y, this.w, this.h);
         this.ctx.closePath();
         this.update();
     }

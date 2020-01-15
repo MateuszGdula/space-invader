@@ -23,9 +23,6 @@ class AlienShip extends EventTarget {
     draw() {
         this.ctx.beginPath();
         this.ctx.drawImage(this.asset, this.x, this.y, this.w, this.h);
-        this.ctx.strokeStyle = "#FF0000";
-        this.ctx.lineWidth = 2;
-        this.ctx.strokeRect(this.x, this.y, this.w, this.h);
         this.ctx.closePath();
         this.update();
     }
