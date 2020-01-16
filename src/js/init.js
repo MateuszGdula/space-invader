@@ -1,6 +1,6 @@
 import '../scss/main.scss';
-import { getGameData, assets, gameObjects, weapons } from "./config";
-import SpaceInvader from './engine/GameEngine';
+import { assets, getGameData, getGameObjects, getWeapons } from "./config";
+import SpaceInvader from './SpaceInvader';
 
 function assetsLoader(assets) {
     return new Promise((resolve, reject) => {
@@ -21,8 +21,8 @@ assetsLoader(assets).then(loadedAssets => {
     window.SI_GAME = {};
     SI_GAME.assets = loadedAssets;
     SI_GAME.data = getGameData();
-    SI_GAME.objects = gameObjects(loadedAssets);
-    SI_GAME.weapons = weapons(loadedAssets);
+    SI_GAME.objects = getGameObjects(loadedAssets);
+    SI_GAME.weapons = getWeapons(loadedAssets);
     SI_GAME.gameInstance = new SpaceInvader();
 });
 

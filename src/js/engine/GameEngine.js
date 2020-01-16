@@ -1,21 +1,3 @@
-/*
-To do:
-1. 
-2. 
-3. 
-4. 
-6. 
-9 
-11.
-12.
-10.
-5. Add a passibility to switch weapons
-13. Block show menu on back btn (mobiles)
-14. Refactor the menu
-8. New Ships, missles, more levels
-7. Add manifest and sw
-*/
-
 import Background from "./Background";
 import Ship from "./Ship";
 import StatusBar from "./StatusBar";
@@ -41,12 +23,6 @@ class GameEngine {
         this.explosions = [];
         this.missles = [];
         this.boxes = [];
-
-        this.menu = document.querySelector('.menu');
-        this.newGameBtn = document.querySelector('.menu__new-game');
-        this.resumeBtn = document.querySelector('.menu__resume');
-        this.optionsBtn = document.querySelector('.menu__options');
-        this.exitBtn = document.querySelector('.menu__exit');
         
         this.timerInterval = null;
         this.playState = false;
@@ -58,24 +34,12 @@ class GameEngine {
         this.handleShot = this.handleShot.bind(this);
         this.ship.addEventListener('shot', this.handleShot);
         this.handlePlayerExplosion = this.handlePlayerExplosion.bind(this);
-        this.ship.addEventListener('explosion', this.handlePlayerExplosion)
-        this.newGameBtn.addEventListener('click', e => {
-            this.timerInterval && this.reset();
-            this.play(levels.level1);
-            this.menu.classList.toggle('open');
-        });
-        this.resumeBtn.addEventListener('click', e => {
-            this.resume();
-            this.menu.classList.toggle('open');
-        });
-        this.toggleMenuHandler = this.toggleMenuHandler.bind(this);
-        document.addEventListener('keydown', this.toggleMenuHandler);
+        this.ship.addEventListener('explosion', this.handlePlayerExplosion);
     }
 
-    toggleMenuHandler(e) {
-        if(e.keyCode !== 27) return;
-        this.playState ? this.pause() : this.resume();
-        this.menu.classList.toggle('open');
+    newGame() {
+        this.timerInterval && this.reset();
+        this.play(levels.level1);
     }
 
     play(level) {

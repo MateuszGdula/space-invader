@@ -1,18 +1,3 @@
-export const getGameData = () => {
-    const canvas = document.querySelector('.game');
-    const canvasHeight = canvas.offsetHeight;
-    canvas.width = Math.round(canvasHeight * 1.77);
-    canvas.height = canvasHeight;
-
-    return {
-        ctx: canvas.getContext('2d'),
-        w: canvas.width,
-        h: canvas.height - 60,
-        isMobile: /iPhone|iPad|iPod|Android/i.test(navigator.userAgent),
-        statusBarHeight: 60
-    }
-}
-
 export const assets = {
     bg: "./assets/bg.png",
     ship: "./assets/ship.png",
@@ -32,7 +17,22 @@ export const assets = {
     weaponIcon: "./assets/weapon-icon.png",
 }
 
-export const gameObjects = (loadedAssets) => {
+export const getGameData = () => {
+    const canvas = document.querySelector('.game');
+    const canvasHeight = canvas.offsetHeight;
+    canvas.width = Math.round(canvasHeight * 1.77);
+    canvas.height = canvasHeight;
+
+    return {
+        ctx: canvas.getContext('2d'),
+        w: canvas.width,
+        h: canvas.height - 60,
+        isMobile: /iPhone|iPad|iPod|Android/i.test(navigator.userAgent),
+        statusBarHeight: 60
+    }
+}
+
+export const getGameObjects = (loadedAssets) => {
     return {
         background: {
             asset: loadedAssets.bg,
@@ -103,7 +103,7 @@ export const gameObjects = (loadedAssets) => {
     }
 }
 
-export const weapons = (loadedAssets) => {
+export const getWeapons = (loadedAssets) => {
     return [
         {
             name: "Blaster WTF-40",
