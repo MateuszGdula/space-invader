@@ -25,11 +25,10 @@ class Ship extends EventTarget {
     }
     
     setListeners() {
-        if(/* SI_GAME.data.isMobile */true) {
+        if(SI_GAME.data.isMobile) {
             //listeners for mobile devices
             document.addEventListener('click', e => {
                 e.clientY > SI_GAME.data.h ? this.switchWeapon() : this.shot();
-                alert(`${e.clientY} ${SI_GAME.data.h}`);
             });
 
             this.swipesHandler = this.swipesHandler.bind(this);

@@ -25,7 +25,7 @@ import Explosion from './Explosion';
 import Box from "./Box";
 import levels from './levels';
 
-class SpaceInvader {
+class GameEngine {
     constructor() {
         this.setVars();
         this.setListeners();
@@ -61,10 +61,6 @@ class SpaceInvader {
         this.ship.addEventListener('explosion', this.handlePlayerExplosion)
         this.newGameBtn.addEventListener('click', e => {
             this.timerInterval && this.reset();
-            if (SI_GAME.data.isMobile) {
-                document.querySelector('main').requestFullscreen();
-                screen.orientation.lock('landscape');
-            }
             this.play(levels.level1);
             this.menu.classList.toggle('open');
         });
@@ -207,5 +203,5 @@ class SpaceInvader {
     }
 }
 
-export default SpaceInvader;
+export default GameEngine;
    

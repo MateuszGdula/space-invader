@@ -1,6 +1,6 @@
 import '../scss/main.scss';
-import {data, assets, gameObjects, weapons } from "./SI_VARS";
-import SpaceInvader from './SpaceInvader';
+import { getGameData, assets, gameObjects, weapons } from "./config";
+import SpaceInvader from './engine/GameEngine';
 
 function assetsLoader(assets) {
     return new Promise((resolve, reject) => {
@@ -10,7 +10,7 @@ function assetsLoader(assets) {
             loadedAssets[key] = new Image();
             loadedAssets[key].onload = () => {
                 assetsNum--;
-                if (assetsNum === 0) resolve(loadedAssets);
+                assetsNum === 0 && resolve(loadedAssets);
             };
             loadedAssets[key].src = assets[key];
         }
@@ -20,8 +20,11 @@ function assetsLoader(assets) {
 assetsLoader(assets).then(loadedAssets => {
     window.SI_GAME = {};
     SI_GAME.assets = loadedAssets;
-    SI_GAME.data = data;
+    SI_GAME.data = getGameData();
     SI_GAME.objects = gameObjects(loadedAssets);
     SI_GAME.weapons = weapons(loadedAssets);
     SI_GAME.gameInstance = new SpaceInvader();
 });
+
+document.querySelector('main').requestFullscreen();
+screen.orientation.lock('landscape');

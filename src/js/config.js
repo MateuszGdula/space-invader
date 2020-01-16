@@ -1,15 +1,16 @@
-const canvas = document.querySelector('.game');
+export const getGameData = () => {
+    const canvas = document.querySelector('.game');
+    const canvasHeight = canvas.offsetHeight;
+    canvas.width = Math.round(canvasHeight * 1.77);
+    canvas.height = canvasHeight;
 
-const canvasHeight = canvas.offsetHeight;
-canvas.width = Math.round(canvasHeight * 1.77);
-canvas.height = canvasHeight;
-
-export const data = {
-    ctx: canvas.getContext('2d'),
-    w: canvas.width,
-    h: canvas.height - 60,
-    isMobile: /iPhone|iPad|iPod|Android/i.test(navigator.userAgent),
-    statusBarHeight: 60
+    return {
+        ctx: canvas.getContext('2d'),
+        w: canvas.width,
+        h: canvas.height - 60,
+        isMobile: /iPhone|iPad|iPod|Android/i.test(navigator.userAgent),
+        statusBarHeight: 60
+    }
 }
 
 export const assets = {
