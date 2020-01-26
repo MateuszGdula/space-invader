@@ -1,5 +1,5 @@
 import '../scss/main.scss';
-import { assets, getGameData, getGameObjects, getWeapons } from "./config";
+import { assets } from "./config";
 import SpaceInvader from './SpaceInvader';
 
 function assetsLoader(assets) {
@@ -17,14 +17,4 @@ function assetsLoader(assets) {
     });    
 }
 
-assetsLoader(assets).then(loadedAssets => {
-    window.SI_GAME = {};
-    SI_GAME.assets = loadedAssets;
-    SI_GAME.data = getGameData();
-    SI_GAME.objects = getGameObjects(loadedAssets);
-    SI_GAME.weapons = getWeapons(loadedAssets);
-    SI_GAME.gameInstance = new SpaceInvader();
-});
-
-document.querySelector('main').requestFullscreen();
-screen.orientation.lock('landscape');
+assetsLoader(assets).then(loadedAssets => new SpaceInvader(loadedAssets));

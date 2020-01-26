@@ -8,11 +8,11 @@ main {
 }
 
 canvas {
-    background-color: #eeeeee;
-    display: block;
-    //position: absolute;
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
+  background-color: #eeeeee;
+  display: block;
+  //position: absolute;
 }
 
 .menu {
@@ -29,7 +29,7 @@ canvas {
         rgba(6, 18, 33, .7) 70%,
         rgba(6, 18, 33, 0) 100%
   ); */
-  background: url('../assets/bg.png') no-repeat center;
+  background: url("../assets/bg.png") no-repeat center;
   background-size: 100%;
   display: flex;
   justify-content: center;
@@ -40,11 +40,11 @@ canvas {
   transform: translate(-50%, -50%);
   opacity: 0;
   pointer-events: none;
-  translate: opacity .2s ease-out;
+  translate: opacity 0.2s ease-out;
 
   &.open {
-      opacity: 1;
-      pointer-events: all;
+    opacity: 1;
+    pointer-events: all;
   }
 
   & li {
@@ -53,5 +53,34 @@ canvas {
     &:hover {
       color: orange;
     }
+  }
+}
+
+// Overlay text animation
+@keyframes textColor {
+  from {
+    color: #ffffff;
+  }
+  to {
+    color: orange;
+  }
+}
+
+.init-overlay {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(3,3,70,1) 35%, rgba(2,0,36,1) 85%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  
+  &__text {
+    font-size: 24px;
+    color: #fff;
+    animation: textColor 1.2s ease-out infinite alternate;
   }
 }

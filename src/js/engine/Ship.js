@@ -28,7 +28,7 @@ class Ship extends EventTarget {
         if(SI_GAME.data.isMobile) {
             //listeners for mobile devices
             document.addEventListener('click', e => {
-                e.clientY > SI_GAME.data.h ? this.switchWeapon() : this.shot();
+                e.clientY * 2 > SI_GAME.data.h ? this.switchWeapon() : this.shot();
             });
 
             this.swipesHandler = this.swipesHandler.bind(this);
@@ -36,7 +36,7 @@ class Ship extends EventTarget {
 
             document.addEventListener('touchstart', e => {
                 this.touchX = this.x;
-                this.touchY = this.y
+                this.touchY = this.y;
             });
 
             document.addEventListener('touchend', e => {
@@ -97,7 +97,6 @@ class Ship extends EventTarget {
         
         if(isDuplicated) {
             this.weapons[duplicatedIndex].charges += newWeapon.charges;
-            console.log(this.weapons[duplicatedIndex]);
         } else {
             this.weapons.push(newWeapon);
             this.eqWeapon = newWeapon;

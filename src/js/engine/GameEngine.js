@@ -1,11 +1,11 @@
+import AlienShip from './AlienShip';
 import Background from "./Background";
+import Box from "./Box";
+import Explosion from './Explosion';
+import levels from './levels';
+import Missle from './Missle';
 import Ship from "./Ship";
 import StatusBar from "./StatusBar";
-import Missle from './Missle';
-import AlienShip from './AlienShip';
-import Explosion from './Explosion';
-import Box from "./Box";
-import levels from './levels';
 
 class GameEngine {
     constructor() {

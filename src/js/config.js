@@ -18,17 +18,18 @@ export const assets = {
 }
 
 export const getGameData = () => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const canvas = document.querySelector('.game');
-    const canvasHeight = canvas.offsetHeight;
-    canvas.width = Math.round(canvasHeight * 1.77);
-    canvas.height = canvasHeight;
+    let gameHeight = isMobile ? Math.max(screen.width, screen.height) : Math.min(innerWidth, innerHeight);
+    canvas.width = Math.round(gameHeight * 1.77);
+    canvas.height = gameHeight;
 
     return {
         ctx: canvas.getContext('2d'),
         w: canvas.width,
         h: canvas.height - 60,
-        isMobile: /iPhone|iPad|iPod|Android/i.test(navigator.userAgent),
-        statusBarHeight: 60
+        statusBarHeight: 60,
+        isMobile
     }
 }
 
