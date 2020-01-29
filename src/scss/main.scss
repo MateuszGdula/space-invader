@@ -53,6 +53,9 @@ canvas {
     &:hover {
       color: orange;
     }
+    &.selected {
+      color: orange;
+    }
   }
 }
 
