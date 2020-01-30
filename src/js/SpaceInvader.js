@@ -1,7 +1,5 @@
 /*
 To do:
-13. Show menu on back btn (mobiles)
-14. Refactor the menu
 8. New Ships, missles, more levels
 7. Add manifest and sw
 */
@@ -22,8 +20,6 @@ class SpaceInvader {
         this.menu = document.querySelector('.menu');
         this.newGameBtn = document.querySelector('.menu__new-game');
         this.resumeBtn = document.querySelector('.menu__resume');
-        //this.optionsBtn = document.querySelector('.menu__options');
-        //this.exitBtn = document.querySelector('.menu__exit');
         this.menuItems = document.querySelectorAll('.menu li');
         
         this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);

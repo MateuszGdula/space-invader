@@ -4,14 +4,15 @@ class Missle extends EventTarget {
         this.setVars(ctx, missleData);
     }
 
-    setVars(ctx, { asset, w, h, x, y, speed, dmg, owner }) {
+    setVars(ctx, { asset, w, h, x, y, speedX, speedY, dmg, owner }) {
         this.ctx = ctx;
         this.asset = asset;
         this.w = SI_GAME.data.w * w;
         this.h = SI_GAME.data.h * h;
         this.x = x
         this.y = y
-        this.speed = speed;
+        this.speedX = speedX;
+        this.speedY = speedY;
         this.dmg = dmg;
         this.owner = owner;
     }
@@ -24,7 +25,8 @@ class Missle extends EventTarget {
     }
 
     update() {
-        this.x += this.speed;
+        this.x += this.speedX;
+        this.y += this.speedY;
         
         if (
             this.x > SI_GAME.data.w ||

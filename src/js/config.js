@@ -55,7 +55,8 @@ export const getGameObjects = (loadedAssets) => {
                     w: 0.02,
                     h: 0.01,
                     damage: 10,
-                    speed: 3,
+                    speedX: 3,
+                    speedY: 0,
                     reloadTime: 1000
                 },
                 reward: 100
@@ -70,7 +71,8 @@ export const getGameObjects = (loadedAssets) => {
                     w: 0.02,
                     h: 0.02,
                     damage: 20,
-                    speed: 1.8,
+                    speedX: 1.8,
+                    speedY: 0,
                     reloadTime: 4000
                 },
                 reward: 300
@@ -85,7 +87,8 @@ export const getGameObjects = (loadedAssets) => {
                     w: 0.06,
                     h: 0.06,
                     damage: 5,
-                    speed: 4,
+                    speedX: 4,
+                    speedY: 0,
                     reloadTime: 4000
                 },
                 reward: 150
@@ -112,7 +115,8 @@ export const getWeapons = (loadedAssets) => {
             w: 0.02,
             h: 0.01,
             damage: 20,
-            speed: 4,
+            speedX: 4,
+            speedY: 0,
             reloadTime: 100,
             charges: 'UNLIMITED' 
         },
@@ -122,7 +126,8 @@ export const getWeapons = (loadedAssets) => {
             w: 0.07,
             h: 0.07,
             damage: 35,
-            speed: 9,
+            speedX: 9,
+            speedY: 0,
             reloadTime: 180,
             charges: 100
         }

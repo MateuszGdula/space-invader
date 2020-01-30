@@ -72,7 +72,7 @@ class Ship extends EventTarget {
         (e.key == 'Up' || e.key == 'ArrowUp') && (this.moveUp = true);
         (e.key == 'Down' || e.key == 'ArrowDown') && (this.moveDown = true);
         e.key === " " && this.shot();
-        e.key === "Control" && this.switchWeapon();
+        (e.key === "c" || e.key === "C") && this.switchWeapon();
     }
     
     keyUpHandler(e) {
@@ -143,7 +143,8 @@ class Ship extends EventTarget {
         missleData.h = this.eqWeapon.h;
         missleData.x = this.x + this.w;
         missleData.y = this.y + Math.round(this.h / 2) - Math.round(this.eqWeapon.h * SI_GAME.data.h / 2);
-        missleData.speed = this.eqWeapon.speed;
+        missleData.speedX = this.eqWeapon.speedX;
+        missleData.speedY = this.eqWeapon.speedY;
         missleData.dmg = this.eqWeapon.damage;
         missleData.owner = 'p1';
         e.missleData = missleData;
