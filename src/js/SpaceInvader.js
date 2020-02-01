@@ -1,7 +1,8 @@
 /*
 To do:
-8. New Ships, missles, more levels
-7. Add manifest and sw
+Enable start new game
+Enable reach next level
+New Ships, missles, more levels
 */
 import { getGameData, getGameObjects, getWeapons } from "./config";
 import GameEngine from './engine/GameEngine';

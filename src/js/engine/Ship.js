@@ -1,13 +1,14 @@
 class Ship extends EventTarget {
-    constructor(ctx, shipData) {
+    constructor(ctx, GameEngine, shipData) {
         super();
-        this.setVars(ctx, shipData);
+        this.setVars(ctx, GameEngine, shipData);
         this.addWeapon(SI_GAME.weapons[0]);
         this.setListeners();
     }
 
-    setVars(ctx, { asset, speed, shield }) {
+    setVars(ctx, GameEngine, { asset, speed, shield }) {
         this.ctx = ctx;
+        this.GameEngine = GameEngine;
         this.asset = asset;
         this.speed = speed;
         this.shield = shield;
@@ -27,21 +28,14 @@ class Ship extends EventTarget {
     setListeners() {
         if(SI_GAME.data.isMobile) {
             //listeners for mobile devices
-            document.addEventListener('click', e => {
-                e.clientY * 2 > SI_GAME.data.h ? this.switchWeapon() : this.shot();
-            });
-
+            this.clickHandler = this.clickHandler.bind(this);
+            document.addEventListener('click', this.clickHandler);
             this.swipesHandler = this.swipesHandler.bind(this);
             document.addEventListener('touchmove', this.swipesHandler);
-
-            document.addEventListener('touchstart', e => {
-                this.touchX = this.x;
-                this.touchY = this.y;
-            });
-
-            document.addEventListener('touchend', e => {
-                this.moveUp = this.moveDown = this.moveRight = this.moveLeft = false;
-            });
+            this.touchStartHandler = this.touchStartHandler.bind(this);
+            document.addEventListener('touchstart', this.touchStartHandler);
+            this.touchEndHandler = this.touchEndHandler.bind(this);
+            document.addEventListener('touchend', this.touchEndHandler);
         } else {
             //listeners for deskop devices
             this.keyDownHandler = this.keyDownHandler.bind(this);
@@ -51,8 +45,26 @@ class Ship extends EventTarget {
         }
     }
 
+    removeListeners() {
+        if(SI_GAME.data.isMobile) {
+            document.removeEventListener('click', this.clickHandler);
+            document.removeEventListener('touchmove', this.swipesHandler);
+            document.removeEventListener('touchstart', this.touchStartHandler);
+            document.removeEventListener('touchend', this.touchEndHandler);
+        } else {
+            document.removeEventListener('keydown', this.keyDownHandler);
+            document.removeEventListener('keyup', this.keyUpHandler)
+        }
+    }
+
     //mobile devices controllers
+    clickHandler() {
+        if(!this.GameEngine.playState) return;
+        e.clientY * 2 > SI_GAME.data.h ? this.switchWeapon() : this.shot();
+    }
+
     swipesHandler(e) {
+        if(!this.GameEngine.playState) return;
         let touch = e.touches[0];
 
         (touch.clientX > this.touchX) && (this.moveRight = true);
@@ -65,8 +77,20 @@ class Ship extends EventTarget {
         this.touchY = touch.clientY;
     }
 
+    touchStartHandler() {
+        if(!this.GameEngine.playState) return;
+        this.touchX = this.x;
+        this.touchY = this.y;
+    }
+
+    touchEndHandler() {
+        if(!this.GameEngine.playState) return;
+        this.moveUp = this.moveDown = this.moveRight = this.moveLeft = false;
+    }
+
     // desktop devices controllers
     keyDownHandler(e) {
+        if(!this.GameEngine.playState) return;
         (e.key == 'Right' || e.key == 'ArrowRight') && (this.moveRight = true);
         (e.key == 'Left' || e.key == 'ArrowLeft') && (this.moveLeft = true);
         (e.key == 'Up' || e.key == 'ArrowUp') && (this.moveUp = true);
@@ -76,6 +100,7 @@ class Ship extends EventTarget {
     }
     
     keyUpHandler(e) {
+        if(!this.GameEngine.playState) return;
         (e.key == 'Right' || e.key == 'ArrowRight') && (this.moveRight = false);
         (e.key == 'Left' || e.key == 'ArrowLeft') && (this.moveLeft = false);
         (e.key == 'Up' || e.key == 'ArrowUp') && (this.moveUp = false);

@@ -16,7 +16,7 @@ class GameEngine {
     setVars() {
         this.ctx = SI_GAME.data.ctx;
         this.bg = new Background(this.ctx, SI_GAME.objects.background);
-        this.ship = new Ship(this.ctx, SI_GAME.objects.playerShip);
+        this.ship = new Ship(this.ctx, this, SI_GAME.objects.playerShip);
         this.statusBar = new StatusBar(this.ctx);
 
         this.aliens = [];
@@ -84,7 +84,11 @@ class GameEngine {
     }
 
     reset() {
-        location.reload();
+        //location.reload();
+        clearInterval(this.timerInterval);
+        this.ship.removeListeners();
+        this.setVars();
+        this.setListeners();
     }
 
     drawFrame() {
