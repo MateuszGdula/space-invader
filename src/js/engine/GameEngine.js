@@ -2,7 +2,7 @@ import AlienShip from './AlienShip';
 import Background from "./Background";
 import Box from "./Box";
 import Explosion from './Explosion';
-import levels from './levels';
+import stages from './stages';
 import Missle from './Missle';
 import Ship from "./Ship";
 import StatusBar from "./StatusBar";
@@ -24,10 +24,11 @@ class GameEngine {
         this.missles = [];
         this.boxes = [];
         
-        this.timerInterval = null;
         this.playState = false;
+        this.timerInterval = null;
         this.timer = 0;
         this.score = 0;
+        this.stage = 0;
     }
 
     setListeners() {
@@ -39,18 +40,19 @@ class GameEngine {
 
     newGame() {
         this.timerInterval && this.reset();
-        this.play(levels.level1);
+        this.play(stages[this.stage]);
+        this.drawFrame();
     }
 
-    play(level) {
+    play(stage) {
         this.playState = true;
         this.timerInterval = setInterval(() => {
             if(!this.playState) return;
 
-            if(level[this.timer]) {
-                switch (level[this.timer].type) {
+            if(stage[this.timer]) {
+                switch (stage[this.timer].type) {
                     case 'enemy':
-                        const { index, number, chaser } = level[this.timer];
+                        const { index, number, chaser } = stage[this.timer];
                         for(let i = 0; i < number; i++) {
                             let alien = new AlienShip(this.ctx, SI_GAME.objects.alienShips[index], this.ship, chaser);
                             alien.addEventListener('shot', this.handleShot.bind(this));
@@ -60,18 +62,17 @@ class GameEngine {
                         }
                         break;
                     case 'box':
-                        const { content } = level[this.timer];
+                        const { content } = stage[this.timer];
                         let box = new Box(this.ctx, SI_GAME.objects[content]);
                         box.addEventListener('remove', e => this.boxes.splice(this.boxes.indexOf(e.target), 1));
                         this.boxes.push(box);
                         break;
+                    case 'endStage':
+                        this.setNextStage();
                 }
             }
-
             this.timer ++;
         }, 1000);
-
-        this.drawFrame();
     }
 
     pause() {
@@ -84,11 +85,17 @@ class GameEngine {
     }
 
     reset() {
-        //location.reload();
         clearInterval(this.timerInterval);
         this.ship.removeListeners();
         this.setVars();
         this.setListeners();
+    }
+
+    setNextStage() {
+        this.stage ++;
+        clearInterval(this.timerInterval);
+        this.timer = 0;
+        this.play(stages[this.stage]);
     }
 
     drawFrame() {
