@@ -14,7 +14,6 @@ class Explosion extends EventTarget {
         this.speedY = speedY;
         this.asset = SI_GAME.assets.explosion;
         this.framesCounter = time;
-        console.log(this);
     }
 
     draw() {

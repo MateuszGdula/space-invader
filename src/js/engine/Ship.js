@@ -23,6 +23,7 @@ class Ship extends EventTarget {
         this.reload = false;
         this.weapons = [];
         this.eqWeapon = null;
+        this.isGameOver = false;
     }
     
     setListeners() {
@@ -142,7 +143,7 @@ class Ship extends EventTarget {
     }
 
     update() {
-        this.shield <= 0 && this.shipExplosion();
+        this.shield <= 0 && !this.isGameOver && this.shipExplosion();
         (this.moveRight && (this.x + this.w < SI_GAME.data.w)) && (this.x += this.speed);
         (this.moveLeft && ( this.x > 0)) && (this.x -= this.speed);
         (this.moveDown && (this.y + this.h < SI_GAME.data.h)) && (this.y += this.speed);
@@ -152,10 +153,18 @@ class Ship extends EventTarget {
     }
 
     shipExplosion() {
-        this.asset = SI_GAME.assets.explosion;
-        this.w += 2.4;
-        this.h += 0.8;
-        //this.alpha <= 0 && this.dispatchEvent(new Event('explosion'));
+        this.isGameOver = true;
+        const e = new Event('explosion');
+        const explosionData = {};
+        explosionData.x = this.x;
+        explosionData.y = this.y;
+        explosionData.w = this.w;
+        explosionData.h = this.h;
+        explosionData.speedX = 0;
+        explosionData.speedY = 0;
+        explosionData.time = 60;
+        e.explosionData = explosionData;
+        this.dispatchEvent(e);
     }
 
     shot() {

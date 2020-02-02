@@ -67,8 +67,8 @@ class AlienShip extends EventTarget {
     }
 
     shipExplosion() {
-        let e = new Event('explosion');
-        let explosionData = {};
+        const e = new Event('explosion');
+        const explosionData = {};
         explosionData.x = this.x;
         explosionData.y = this.y;
         explosionData.w = this.w;

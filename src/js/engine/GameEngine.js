@@ -108,7 +108,7 @@ class GameEngine {
         this.boxes.forEach(box => box.draw());
         this.statusBar.draw(this.score, this.ship.shield, this.ship.eqWeapon);
 
-        this.detectColisions();
+        this.detectCollisions();
         
         this.playState && requestAnimationFrame(() => this.drawFrame());
     }
@@ -125,7 +125,8 @@ class GameEngine {
     }
 
     handlePlayerExplosion(e) {
-        console.log('game over');
+        console.log("go");
+        this.addExplosion(e.explosionData);
     }
 
     handleAlienExplosion(e) {
@@ -152,7 +153,7 @@ class GameEngine {
         this.explosions.push(explosion);
     }
 
-    detectColisions() {
+    detectCollisions() {
         //missles collisions
         this.missles.forEach((missle, i) => {
             if(

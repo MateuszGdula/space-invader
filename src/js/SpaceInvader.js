@@ -1,7 +1,10 @@
 /*
 To do:
-Enable reach next level
 New Ships, missles, more levels
+*/
+
+/*
+Integration of the DOM UI elements and game engine
 */
 import { getGameData, getGameObjects, getWeapons } from "./config";
 import GameEngine from "./engine/GameEngine";
