@@ -1,20 +1,21 @@
 class AlienShip extends EventTarget {
-    constructor(ctx, alienShipData, target, chaser) {
+    constructor(ctx, alienShipData, target, isChaser) {
         super();
-        this.setVars(ctx, alienShipData, target, chaser);
+        this.setVars(ctx, alienShipData, target, isChaser);
     }
 
-    setVars(ctx, { asset, speed, shield, weapon, reward }, target, chaser) {
+    setVars(ctx, { asset, speed, shield, weapon, reward }, target, isChaser) {
         this.ctx = ctx;
         this.asset = asset;
-        this.speed = speed - Math.random() / 2;
+        this.speedX = speed - Math.random() / 2;
+        this.speedY = this.speedX / 2;
         this.shield = shield;
         this.w = SI_GAME.data.w * 0.08;
         this.h = SI_GAME.data.h * 0.05;
         this.x = SI_GAME.data.w;
         this.y = 1 + Math.floor(Math.random() * (SI_GAME.data.h - this.h))
         this.target = target;
-        this.chaser = chaser;
+        this.isChaser = isChaser;
         this.reload = false;
         this.weapon = weapon;
         this.reward = reward;
@@ -29,19 +30,19 @@ class AlienShip extends EventTarget {
 
     update() {
         this.shield <=0 && this.shipExplosion();
-        this.x -= this.speed;
+        this.x -= this.speedX;
         
-        //follow players ship when chaser flag is true
+        //follow players ship when isChaser flag is true
         if (
-            this.chaser &&
+            this.isChaser &&
             (this.target.y + this.target.h / 2) > (this.y + this.h / 2)
         ) {
-            this.y += this.speed / 2
+            this.y += this.speedY;
         } else if (
-            this.chaser &&
+            this.isChaser &&
             (this.target.y + this.target.h / 2) < (this.y + this.h / 2)
         ) {
-            this.y -= this.speed / 2
+            this.y -= this.speedY;
         }
 
         //shot when players ship is in the range
@@ -72,14 +73,17 @@ class AlienShip extends EventTarget {
         explosionData.y = this.y;
         explosionData.w = this.w;
         explosionData.h = this.h;
+        explosionData.speedX = this.speedX * -1.3;
+        explosionData.speedY = 0;
+        explosionData.time = 30;
         e.explosionData = explosionData;
         this.dispatchEvent(e);
     }
 
     shot() {
         if(this.reload) return;
-        let e  = new Event('shot');
-        let missleData = {};
+        const e  = new Event('shot');
+        const missleData = {};
         missleData.asset = this.weapon.asset;
         missleData.w = this.weapon.w;
         missleData.h = this.weapon.h;

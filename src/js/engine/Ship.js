@@ -155,14 +155,13 @@ class Ship extends EventTarget {
         this.asset = SI_GAME.assets.explosion;
         this.w += 2.4;
         this.h += 0.8;
-        this.alpha -= 0.03;
-        this.alpha <= 0 && this.dispatchEvent(new Event('explosion'));
+        //this.alpha <= 0 && this.dispatchEvent(new Event('explosion'));
     }
 
     shot() {
         if(this.reload || this.eqWeapon.charges === 0) return;
-        let e  = new Event('shot');
-        let missleData = {};
+        const e  = new Event('shot');
+        const missleData = {};
         missleData.asset = this.eqWeapon.asset;
         missleData.w = this.eqWeapon.w;
         missleData.h = this.eqWeapon.h;

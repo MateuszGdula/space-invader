@@ -23,6 +23,7 @@ class SpaceInvader {
     this.menuItems = document.querySelectorAll(".menu li");
 
     this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    this.isOverlayRemoved = false;
     this.assets = assets;
     this.game = null;
   }
@@ -61,6 +62,7 @@ class SpaceInvader {
     const removeOverlayEvent = this.isMobile ? "click" : "keydown";
     this.isMobile && this.gameContainer.requestFullscreen();
     this.overlay.style.display = "none";
+    this.isOverlayRemoved = true;
     document.removeEventListener(removeOverlayEvent, this.rmoveOverlay);
   }
 
@@ -77,6 +79,7 @@ class SpaceInvader {
   }
 
   menuKeydownHandler(e) {
+    if(!this.isOverlayRemoved) return;
     e.keyCode === 27 && this.pauseHandler();
     
     (e.keyCode === 38 || e.keyCode === 40) &&

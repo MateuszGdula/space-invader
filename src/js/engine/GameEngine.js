@@ -129,11 +129,27 @@ class GameEngine {
     }
 
     handleAlienExplosion(e) {
-        let explosion = new Explosion(this.ctx, e.explosionData);
-        explosion.addEventListener('remove', e => this.explosions.splice(this.explosions.indexOf(e.target), 1));
-        this.explosions.push(explosion);
+        this.addExplosion(e.explosionData);
         this.aliens.splice(this.aliens.indexOf(e.target), 1);
         this.score += e.target.reward;
+    }
+
+    handleMissleExplosion(missle, ship) {
+        const explosionData = {};
+        explosionData.x = missle.owner === 'npc' ? missle.x :  missle.x + missle.w;
+        explosionData.y = Math.min(ship.y + ship.h - (missle.h / 2), Math.max(missle.y, ship.y - (missle.h / 2)));
+        explosionData.w = missle.h;
+        explosionData.h = missle.h;
+        explosionData.speedX = missle.speedX / 5;
+        explosionData.speedY = missle.speedY / 5;
+        explosionData.time = 10;
+        this.addExplosion(explosionData);
+    }
+
+    addExplosion(explosionData) {
+        let explosion = new Explosion(this.ctx, explosionData);
+        explosion.addEventListener('remove', e => this.explosions.splice(this.explosions.indexOf(e.target), 1));
+        this.explosions.push(explosion);
     }
 
     detectColisions() {
@@ -147,6 +163,7 @@ class GameEngine {
                 (missle.y + missle.h > this.ship.y)
             ) {
                 this.ship.shield -= missle.dmg;
+                this.handleMissleExplosion(missle, this.ship);
                 this.missles.splice(i, 1);
             } else if (missle.owner === 'p1') {
                 this.aliens.forEach((alien, j) => {
@@ -157,6 +174,7 @@ class GameEngine {
                         (missle.y < alien.y + alien.h) 
                     ) {
                         alien.shield -= missle.dmg;
+                        this.handleMissleExplosion(missle, alien);
                         this.missles.splice(i, 1);
                     }
                 })

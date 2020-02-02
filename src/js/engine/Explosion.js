@@ -4,14 +4,17 @@ class Explosion extends EventTarget {
         this.setVars(ctx, explosionData);
     }
 
-    setVars(ctx, {x, y, w, h}) {
+    setVars(ctx, {x, y, w, h, speedX, speedY, time}) {
         this.ctx = ctx;
-        this.w = w;
-        this.h = h;
         this.x = x;
         this.y = y;
+        this.w = w;
+        this.h = h;
+        this.speedX = speedX;
+        this.speedY = speedY;
         this.asset = SI_GAME.assets.explosion;
-        this.updateCouter = 0;
+        this.framesCounter = time;
+        console.log(this);
     }
 
     draw() {
@@ -24,7 +27,9 @@ class Explosion extends EventTarget {
     update() {
         this.w *= 1.015;
         this.h *= 1.015;
-        this.updateCouter === 30 ? this.dispatchEvent(new Event('remove')) : this.updateCouter++;
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.framesCounter === 0 ? this.dispatchEvent(new Event('remove')) : this.framesCounter--;
     }
 }
 
