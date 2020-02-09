@@ -162,7 +162,7 @@ class Ship extends EventTarget {
         explosionData.h = this.h;
         explosionData.speedX = 0;
         explosionData.speedY = 0;
-        explosionData.time = 60;
+        explosionData.time = 10;
         e.explosionData = explosionData;
         this.dispatchEvent(e);
     }

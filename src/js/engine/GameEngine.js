@@ -25,6 +25,7 @@ class GameEngine {
         this.boxes = [];
         
         this.playState = false;
+        this.gameOver = false;
         this.timerInterval = null;
         this.timer = 0;
         this.score = 0;
@@ -34,8 +35,8 @@ class GameEngine {
     setListeners() {
         this.handleShot = this.handleShot.bind(this);
         this.ship.addEventListener('shot', this.handleShot);
-        this.handlePlayerExplosion = this.handlePlayerExplosion.bind(this);
-        this.ship.addEventListener('explosion', this.handlePlayerExplosion);
+        this.handleGameOver = this.handleGameOver.bind(this);
+        this.ship.addEventListener('explosion', this.handleGameOver);
     }
 
     newGame() {
@@ -99,6 +100,7 @@ class GameEngine {
     }
 
     drawFrame() {
+        if(this.gameOver) return;
         this.ctx.clearRect(0, 0, SI_GAME.data.w, SI_GAME.data.h);
         this.bg.draw();
         this.ship.draw();
@@ -124,9 +126,12 @@ class GameEngine {
         missle.addEventListener('remove', removeHandler);
     }
 
-    handlePlayerExplosion(e) {
-        console.log("go");
-        this.addExplosion(e.explosionData);
+    handleGameOver(e) {
+        this.ship.asset = SI_GAME.assets.explosion;
+        this.addExplosion(e.explosionData, e => {
+            this.gameOver = true;
+            SI_GAME.data.canvas.classList.add('game-over');
+        });
     }
 
     handleAlienExplosion(e) {
@@ -147,9 +152,9 @@ class GameEngine {
         this.addExplosion(explosionData);
     }
 
-    addExplosion(explosionData) {
+    addExplosion(explosionData, callback = e => this.explosions.splice(this.explosions.indexOf(e.target), 1)) {
         let explosion = new Explosion(this.ctx, explosionData);
-        explosion.addEventListener('remove', e => this.explosions.splice(this.explosions.indexOf(e.target), 1));
+        explosion.addEventListener('remove', callback);
         this.explosions.push(explosion);
     }
 

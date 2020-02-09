@@ -75,7 +75,7 @@ class SpaceInvader {
   }
 
   resumeHandler() {
-    if (!this.game.timerInterval) return;
+    if (!this.game.timerInterval || this.game.gameOver) return;
     this.isMobile && this.gameContainer.requestFullscreen();
     this.game.resume();
     this.menu.classList.toggle("open");
@@ -97,6 +97,7 @@ class SpaceInvader {
   pauseHandler() {
     this.game.playState ? this.game.pause() : this.game.resume();
     this.menu.classList.toggle("open");
+    SI_GAME.data.canvas.classList.remove('game-over');
     this.menuItems.forEach(item => item.classList.remove("selected"));
     this.resumeBtn.classList.add("selected");
   }

@@ -26,6 +26,7 @@ export const getGameData = () => {
 
     return {
         ctx: canvas.getContext('2d'),
+        canvas,
         w: canvas.width,
         h: canvas.height - 60,
         statusBarHeight: 60,
