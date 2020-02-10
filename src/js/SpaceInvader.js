@@ -133,8 +133,7 @@ class SpaceInvader {
         console.log(e.message);
       }
     } else {
-      this.game.pause();
-      this.menu.classList.add("open");
+      this.pauseHandler();
     }
   }
 }

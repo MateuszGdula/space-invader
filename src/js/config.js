@@ -104,6 +104,15 @@ export const getGameObjects = (loadedAssets) => {
             asset: loadedAssets.weapon,
             speed: 3,
             type: 'weapon'
+        },
+        defaultText: {
+            w: SI_GAME.data.w,
+            h: SI_GAME.data.h,
+            x: 0,
+            y: 0,
+            font: '18px Ultra',
+            fillStyle: '#FFFFFF',
+            textAlign: 'center'
         }
     }
 }

@@ -59,7 +59,7 @@ class Ship extends EventTarget {
     }
 
     //mobile devices controllers
-    clickHandler() {
+    clickHandler(e) {
         if(!this.GameEngine.playState) return;
         e.clientY * 2 > SI_GAME.data.h ? this.switchWeapon() : this.shot();
     }
