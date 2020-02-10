@@ -36,6 +36,7 @@ class StatusBar {
     draw(score, shield, { name, charges }) {
         this.ctx.beginPath();
 
+        this.ctx.textAlign = 'start';
         this.ctx.fillStyle ='#773819';
         this.ctx.fillRect(this.x, this.y, this.w, this.h);
 

@@ -4,8 +4,9 @@ import Box from "./Box";
 import Explosion from './Explosion';
 import stages from './stages';
 import Missle from './Missle';
-import Ship from "./Ship";
-import StatusBar from "./StatusBar";
+import Ship from './Ship';
+import StatusBar from './StatusBar';
+import ScreenMessage from './ScreenMessage';
 
 class GameEngine {
     constructor() {
@@ -23,6 +24,9 @@ class GameEngine {
         this.explosions = [];
         this.missles = [];
         this.boxes = [];
+        this.messages = [];
+
+        this.messages[0] = new ScreenMessage(this.ctx, 'test stage 1', 4000, SI_GAME.objects.defaultMessage);
         
         this.playState = false;
         this.gameOver = false;
@@ -108,6 +112,7 @@ class GameEngine {
         this.aliens.forEach(alien => alien.draw());
         this.explosions.forEach(explosion => explosion.draw());
         this.boxes.forEach(box => box.draw());
+        this.messages.forEach(message => message.draw());
         this.statusBar.draw(this.score, this.ship.shield, this.ship.eqWeapon);
 
         this.detectCollisions();
