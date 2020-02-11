@@ -1,7 +1,6 @@
 class ScreenMessage extends EventTarget {
     constructor(ctx, message, displayTime, config, callback ) {
         super();
-        console.log('message');
         this.setVars(ctx, message, displayTime, config, callback);
     }
 
@@ -11,14 +10,19 @@ class ScreenMessage extends EventTarget {
         this.displayTime = displayTime;
         this.x = config.x;
         this.y = config.y;
-        console.log(this.x)
-        console.log(this.y);
         this.font = config.font;
         this.fillStyle = config.fillStyle;
         this.textAlign = config.textAlign;
         this.callback = callback;
         this.alpha = 0;
-        this.removeMessage = false;
+        this.fadeIn = true;
+        this.fadeOut = false;
+
+        setTimeout(() => {
+            console.log("ok");
+            this.fadeIn = false;
+            this.fadeOut = true;
+        }, this.displayTime);
     }
 
     draw() {
@@ -26,14 +30,19 @@ class ScreenMessage extends EventTarget {
         this.ctx.font = this.font;
         this.ctx.fillStyle = this.fillStyle;
         this.ctx.textAlign = this.textAlign;
-        //this.ctx.globalAlpha = this.alpha;
+        this.ctx.globalAlpha = this.alpha;
         this.ctx.fillText(this.message, this.x, this.y);
+        this.ctx.globalAlpha = 1;
         this.ctx.closePath();
         this.update();
     }
 
     update() {
-
+        if(this.fadeIn) {
+            this.alpha < 1 ? this.alpha += 0.04 : this.fadeIn = false; 
+        } else if (this.fadeOut) {
+            this.alpha > 0 ? this.alpha -= 0.04 : this.dispatchEvent(new Event('remove'));
+        }
     }
 }
 

@@ -1,4 +1,9 @@
 const stage1 = {
+  0: {
+    type: "message",
+    text: "Stage 1",
+    displayTime: 4000
+  },
   2: {
     type: "enemy",
     index: 0,

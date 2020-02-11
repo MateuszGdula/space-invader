@@ -26,8 +26,6 @@ class GameEngine {
         this.boxes = [];
         this.messages = [];
 
-        this.messages[0] = new ScreenMessage(this.ctx, 'test stage 1', 4000, SI_GAME.objects.defaultMessage);
-        
         this.playState = false;
         this.gameOver = false;
         this.timerInterval = null;
@@ -72,8 +70,15 @@ class GameEngine {
                         box.addEventListener('remove', e => this.boxes.splice(this.boxes.indexOf(e.target), 1));
                         this.boxes.push(box);
                         break;
+                    case 'message':
+                        const { text, displayTime } = stage[this.timer];
+                        let message = new ScreenMessage(this.ctx, text, displayTime, SI_GAME.objects.defaultMessage);
+                        message.addEventListener('remove', e => this.messages.splice(this.messages.indexOf(e.target), 1));
+                        this.messages.push(message);
+                        break;
                     case 'endStage':
                         this.setNextStage();
+                        break;
                 }
             }
             this.timer ++;
