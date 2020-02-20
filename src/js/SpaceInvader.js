@@ -1,6 +1,8 @@
 /*
 To do:
 New Ships, missles, more levels
+Summary popup
+Passibility to submit a score
 */
 
 /*
