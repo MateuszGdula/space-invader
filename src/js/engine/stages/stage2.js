@@ -1,4 +1,4 @@
-const stage1 = {
+const stage2 = {
   0: {
     type: "message",
     text: "Stage 2",
@@ -93,7 +93,10 @@ const stage1 = {
     index: 1,
     number: 1,
     chaser: true
+  },
+  65: {
+    type: "endStage"
   }
 };
 
-export default stage1;
+export default stage2;

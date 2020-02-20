@@ -79,6 +79,9 @@ class GameEngine {
                     case 'endStage':
                         return this.setNextStage();
                         break;
+                    case 'endGame':
+                        this.handleEndGame();
+                        break;
                 }
             }
             this.timer ++;
@@ -141,17 +144,16 @@ class GameEngine {
         this.addExplosion(e.explosionData, e => {
             this.gameOver = true;
             SI_GAME.data.canvas.classList.add('game-over');
-            const gameOverMessage = {
-                x: SI_GAME.data.w / 2,
-                y: SI_GAME.data.h / 3,
-                font: '18px Ultra',
-                fillStyle: '#FFFFFF',
-                textAlign: 'center',
-                alpha: 0
-            }
             let message = new ScreenMessage(this.ctx, 'Game over', 10, SI_GAME.objects.gameOverMessage);
             message.draw();
         });
+    }
+
+    handleEndGame() {
+        this.gameOver = true;
+        SI_GAME.data.canvas.classList.add('game-over');
+        let message = new ScreenMessage(this.ctx, 'You finished all stages!', 10, SI_GAME.objects.gameOverMessage);
+        message.draw();
     }
 
     handleAlienExplosion(e) {
