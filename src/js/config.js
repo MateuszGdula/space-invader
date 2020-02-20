@@ -110,7 +110,16 @@ export const getGameObjects = (loadedAssets) => {
             y: SI_GAME.data.h / 10,
             font: '18px Ultra',
             fillStyle: '#FFFFFF',
-            textAlign: 'center'
+            textAlign: 'center',
+            alpha: 0
+        },
+        gameOverMessage: {
+            x: SI_GAME.data.w / 2,
+            y: SI_GAME.data.h / 2,
+            font: '28px Ultra',
+            fillStyle: '#FFFFFF',
+            textAlign: 'center',
+            alpha: 1
         }
     }
 }

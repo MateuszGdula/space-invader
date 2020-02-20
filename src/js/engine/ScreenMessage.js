@@ -13,13 +13,12 @@ class ScreenMessage extends EventTarget {
         this.font = config.font;
         this.fillStyle = config.fillStyle;
         this.textAlign = config.textAlign;
+        this.alpha = config.alpha;
         this.callback = callback;
-        this.alpha = 0;
         this.fadeIn = true;
         this.fadeOut = false;
 
         setTimeout(() => {
-            console.log("ok");
             this.fadeIn = false;
             this.fadeOut = true;
         }, this.displayTime);
