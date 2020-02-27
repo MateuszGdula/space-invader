@@ -2,3 +2,6 @@ node_modules
 dist/assets/other
 dist/manifest.json
 service-worker.js
+.env
+.gitignore
+server/logs

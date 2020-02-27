@@ -10,7 +10,7 @@
 ### Control for mobiles:
 - Move - swipes
 - Shot - tap game area
-- Next weapon - tap on status bar (on the bottom)
+- Next weapon - tap status bar (on the bottom)
 - Show menu - back
 - Choose menu item - tap
 
