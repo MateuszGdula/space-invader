@@ -8,8 +8,9 @@ import Ship from './Ship';
 import StatusBar from './StatusBar';
 import ScreenMessage from './ScreenMessage';
 
-class GameEngine {
+class GameEngine extends EventTarget {
     constructor() {
+        super();
         this.setVars();
         this.setListeners();
     }
@@ -27,7 +28,7 @@ class GameEngine {
         this.messages = [];
 
         this.playState = false;
-        this.gameOver = false;
+        this.gameOver = true;
         this.timerInterval = null;
         this.timer = 0;
         this.score = 0;
@@ -43,6 +44,7 @@ class GameEngine {
 
     newGame() {
         this.timerInterval && this.reset();
+        this.gameOver = false;
         this.play(stages[this.stage]);
         this.drawFrame();
     }
@@ -146,6 +148,11 @@ class GameEngine {
             SI_GAME.data.canvas.classList.add('game-over');
             let message = new ScreenMessage(this.ctx, 'Game over', 10, SI_GAME.objects.gameOverMessage);
             message.draw();
+            setTimeout(() => {
+                const e = new Event('gameover');
+                e.score = this.score;
+                this.dispatchEvent(e)
+            }, 1500);
         });
     }
 

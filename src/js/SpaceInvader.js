@@ -14,23 +14,44 @@ import GameEngine from "./engine/GameEngine";
 class SpaceInvader {
   constructor(assets) {
     this.setVars(assets);
+    this.setupGame();
     this.setListeners();
-    this.runGame();
   }
 
   setVars(assets) {
     this.gameContainer = document.querySelector("main");
     this.overlay = document.querySelector(".init-overlay");
     this.overlayText = document.querySelector(".init-overlay__text");
+
     this.menu = document.querySelector(".menu");
     this.newGameBtn = document.querySelector(".menu__new-game");
     this.resumeBtn = document.querySelector(".menu__resume");
     this.menuItems = document.querySelectorAll(".menu li");
 
+    this.scorePop = document.querySelector('.score-pop');
+    this.scoreTxt = document.querySelector('.score-pop__txt');
+    this.scoreSubmitBtn = this.scorePop.querySelector('.score-pop__btn.submit');
+    this.scoreMenuBtn = this.scorePop.querySelector('.score-pop__btn.back-to-menu');
+
     this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     this.isOverlayRemoved = false;
     this.assets = assets;
     this.game = null;
+  }
+
+  setupGame() {
+    window.SI_GAME = {};
+    SI_GAME.isMobile = this.isMobile;
+    SI_GAME.assets = this.assets;
+    SI_GAME.data = getGameData();
+    SI_GAME.objects = getGameObjects(this.assets);
+    SI_GAME.weapons = getWeapons(this.assets);
+
+    this.game = new GameEngine();
+
+    this.overlayText.textContent = this.isMobile
+      ? "Touch the screen to continue"
+      : "Press any key to continue";
   }
 
   setListeners() {
@@ -46,21 +67,8 @@ class SpaceInvader {
       "fullscreenchange",
       this.fullScreenHandler.bind(this)
     );
-  }
 
-  runGame() {
-    window.SI_GAME = {};
-    SI_GAME.isMobile = this.isMobile;
-    SI_GAME.assets = this.assets;
-    SI_GAME.data = getGameData();
-    SI_GAME.objects = getGameObjects(this.assets);
-    SI_GAME.weapons = getWeapons(this.assets);
-
-    this.game = new GameEngine();
-
-    this.overlayText.textContent = this.isMobile
-      ? "Touch the screen to continue"
-      : "Press any key to continue";
+    this.game.addEventListener('gameover', this.showScorePop.bind(this));
   }
 
   removeOverlay(e) {
@@ -97,6 +105,8 @@ class SpaceInvader {
   }
 
   pauseHandler() {
+    if (this.game.gameOver) return;
+
     this.game.playState ? this.game.pause() : this.game.resume();
     this.menu.classList.toggle("open");
     SI_GAME.data.canvas.classList.remove('game-over');
@@ -137,6 +147,13 @@ class SpaceInvader {
     } else {
       this.pauseHandler();
     }
+  }
+
+  showScorePop(e) {
+    this.scoreTxt.textContent = e.score;
+
+    //document.createRange().createContextualFragment(popHtmlContent);
+    this.scorePop.classList.add('show');
   }
 }
 
