@@ -150,7 +150,7 @@ class GameEngine extends EventTarget {
             message.draw();
             setTimeout(() => {
                 const e = new Event('gameover');
-                e.score = this.score;
+                e.headerText = 'Game over!';
                 this.dispatchEvent(e)
             }, 1500);
         });

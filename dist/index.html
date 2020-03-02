@@ -17,15 +17,15 @@
                 <li class="menu__resume">Resume</li>
             </ul>
         </nav>
-        <form class="score-pop">
+        <div class="score-pop">
             <div class="score-pop__wrapp">
                 <p class="score-pop__info">Game over!</p>
                 <p class="score-pop__text">Your score is <span class="score-pop__txt"></span> points.</p>
-                <input class="score-pop__input" type="text" name="name" />
+                <input class="score-pop__input" type="text" name="name" placeholder="Name" autocomplete="off" maxlength="15" />
                 <button class="score-pop__btn submit">Submit score</button>
                 <button class="score-pop__btn back-to-menu">Menu</button>
             </div>
-        </form>
+        </div>
         <canvas class="game" width="960" height="540"></canvas>
     </main>
     <div class="init-overlay">

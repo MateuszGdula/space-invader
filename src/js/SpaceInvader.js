@@ -29,7 +29,9 @@ class SpaceInvader {
     this.menuItems = document.querySelectorAll(".menu li");
 
     this.scorePop = document.querySelector('.score-pop');
-    this.scoreTxt = document.querySelector('.score-pop__txt');
+    this.scorePopHeader = this.scorePop.querySelector('.score-pop__info');
+    this.scorePopTxt = this.scorePop.querySelector('.score-pop__txt');
+    this.scorePopInput = this.scorePop.querySelector('input');
     this.scoreSubmitBtn = this.scorePop.querySelector('.score-pop__btn.submit');
     this.scoreMenuBtn = this.scorePop.querySelector('.score-pop__btn.back-to-menu');
 
@@ -69,6 +71,8 @@ class SpaceInvader {
     );
 
     this.game.addEventListener('gameover', this.showScorePop.bind(this));
+    this.scoreSubmitBtn.addEventListener('click', this.submitScore.bind(this));
+    this.scoreMenuBtn.addEventListener('click', this.closeSubmitPop.bind(this));
   }
 
   removeOverlay(e) {
@@ -150,10 +154,36 @@ class SpaceInvader {
   }
 
   showScorePop(e) {
-    this.scoreTxt.textContent = e.score;
+    this.scorePopHeader.textContent = e.headerText;
+    this.scorePopTxt.textContent = this.game.score;
 
     //document.createRange().createContextualFragment(popHtmlContent);
     this.scorePop.classList.add('show');
+  }
+
+  async submitScore(e) {
+    if(!this.scorePopInput.value) return;
+
+    const data = {};
+    data.name = this.scorePopInput.value;
+    data.score = this.game.score;
+
+    let res = await fetch('./scores', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    });
+    res = await res.json();
+    console.log(res);
+  }
+
+  closeSubmitPop(e) {
+    this.scorePop.classList.remove('show');
+    SI_GAME.data.canvas.classList.remove('game-over');
+    this.menu.classList.add('open');
   }
 }
 
