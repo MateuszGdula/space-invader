@@ -131,11 +131,13 @@ canvas {
   }
 
   &__input {
+    width: 100%;
     padding: 5px;
     border-radius: 10px;
   }
 
   &__btn {
+    width: 100%;
     margin: 10px 0 0;
     padding: 5px;
     color: #ffffff;
@@ -144,5 +146,29 @@ canvas {
     border-radius: 10px;
     display: table;
     cursor: pointer;
+  }
+
+  &__top-scores {
+    th {
+      padding: 4px;
+      font-size: 12px;
+      background-color: #eeeeee;
+    }
+    td {
+      padding: 4px;
+      font-size: 12px;
+      
+      &:nth-child(1) {
+        width: 75%;
+      }
+      &:nth-child(2) {
+        width: 25%;
+      }
+    }
+  }
+  
+  &__top-list {
+    width: 100%;
+    display: none;
   }
 }

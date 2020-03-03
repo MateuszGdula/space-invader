@@ -32,7 +32,8 @@ class SpaceInvader {
     this.scorePopHeader = this.scorePop.querySelector('.score-pop__info');
     this.scorePopTxt = this.scorePop.querySelector('.score-pop__txt');
     this.scorePopInput = this.scorePop.querySelector('input');
-    this.scoreSubmitBtn = this.scorePop.querySelector('.score-pop__btn.submit');
+    this.scoreForm = this.scorePop.querySelector('.score-pop__form');
+    this.bestScores = this.scorePop.querySelector('.score-pop__top-list');
     this.scoreMenuBtn = this.scorePop.querySelector('.score-pop__btn.back-to-menu');
 
     this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -71,7 +72,7 @@ class SpaceInvader {
     );
 
     this.game.addEventListener('gameover', this.showScorePop.bind(this));
-    this.scoreSubmitBtn.addEventListener('click', this.submitScore.bind(this));
+    this.scoreForm.addEventListener('submit', this.submitScore.bind(this));
     this.scoreMenuBtn.addEventListener('click', this.closeSubmitPop.bind(this));
   }
 
@@ -156,12 +157,11 @@ class SpaceInvader {
   showScorePop(e) {
     this.scorePopHeader.textContent = e.headerText;
     this.scorePopTxt.textContent = this.game.score;
-
-    //document.createRange().createContextualFragment(popHtmlContent);
     this.scorePop.classList.add('show');
   }
 
   async submitScore(e) {
+    e.preventDefault();
     if(!this.scorePopInput.value) return;
 
     const data = {};
@@ -177,11 +177,23 @@ class SpaceInvader {
       }
     });
     res = await res.json();
-    console.log(res);
+    this.renderTopScores(res.data);    
+  }
+
+  renderTopScores({topPlayers}) {
+    let topScores = '<tr><th>Name</td><th>Score</td></tr>';
+    topPlayers.forEach(player => {
+      topScores += `<tr><td>${player.name}</td><td>${player.score}</td></tr>`
+    });
+    this.bestScores.innerHTML = topScores;
+    this.scoreForm.style.display = 'none';
+    this.bestScores.style.display = 'block';
   }
 
   closeSubmitPop(e) {
     this.scorePop.classList.remove('show');
+    this.scoreForm.style.display = 'block';
+    this.bestScores.style.display = 'none';
     SI_GAME.data.canvas.classList.remove('game-over');
     this.menu.classList.add('open');
   }

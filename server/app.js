@@ -19,7 +19,7 @@ app.post('/scores', async (req, res) =>{
         result = {};
         result.data = {};
         result.data.user = await ScoresDAO.addScore(name, score);
-        result.data.top = await ScoresDAO.getTopScores(10);
+        result.data.topPlayers = await ScoresDAO.getTopScores(10);
         statusCode = 201;
     } else {
         result = {error: 'Invalid type of data'}
