@@ -17,4 +17,4 @@
 ### Suported browsers:
 - Chrome
 - Firefox
-- Chrom mobile
+- Chrome mobile

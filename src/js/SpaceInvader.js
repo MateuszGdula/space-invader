@@ -1,11 +1,4 @@
 /*
-To do:
-New Ships, missles, more levels
-Summary popup
-Passibility to submit a score
-*/
-
-/*
 Integration of the DOM UI elements and game engine
 */
 import { getGameData, getGameObjects, getWeapons } from "./config";
@@ -33,6 +26,7 @@ class SpaceInvader {
     this.scorePopTxt = this.scorePop.querySelector('.score-pop__txt');
     this.scorePopInput = this.scorePop.querySelector('input');
     this.scoreForm = this.scorePop.querySelector('.score-pop__form');
+    this.bestScoresWrapper = this.scorePop.querySelector('.score-pop__top-scores');
     this.bestScores = this.scorePop.querySelector('.score-pop__top-list');
     this.scoreMenuBtn = this.scorePop.querySelector('.score-pop__btn.back-to-menu');
 
@@ -167,17 +161,20 @@ class SpaceInvader {
     const data = {};
     data.name = this.scorePopInput.value;
     data.score = this.game.score;
-
-    let res = await fetch('./scores', {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    });
-    res = await res.json();
-    this.renderTopScores(res.data);    
+    try {
+      let res = await fetch('./scores', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+      res = await res.json();
+      this.renderTopScores(res.data);
+    } catch (e) {
+      this.scorePopHeader.textContent = 'Unable to submit score. Try again later.';
+    }
   }
 
   renderTopScores({topPlayers}) {
@@ -187,13 +184,13 @@ class SpaceInvader {
     });
     this.bestScores.innerHTML = topScores;
     this.scoreForm.style.display = 'none';
-    this.bestScores.style.display = 'block';
+    this.bestScoresWrapper.style.display = 'flex';
   }
 
   closeSubmitPop(e) {
     this.scorePop.classList.remove('show');
     this.scoreForm.style.display = 'block';
-    this.bestScores.style.display = 'none';
+    this.bestScoresWrapper.style.display = 'none';
     SI_GAME.data.canvas.classList.remove('game-over');
     this.menu.classList.add('open');
   }

@@ -11,10 +11,15 @@ main {
 
 canvas {
   width: 100%;
+  max-width: 1400px;
   height: 100%;
+  max-height: 790px;
   background-color: #061221;
   display: block;
-  position: relative;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
   z-index: 10;
   transition: all .3s ease-out;
   &.game-over {
@@ -24,7 +29,9 @@ canvas {
 
 .menu {
   width: 100%;
+  max-width: 1400px;
   height: 100%;
+  max-height: 790px;
   font-size: 28px;
   line-height: 34px;
   color: #ffffff;
@@ -79,14 +86,17 @@ canvas {
 
 .init-overlay {
   width: 100%;
+  max-width: 1400px;
   height: 100%;
+  max-height: 790px;
   background: radial-gradient(circle, rgba(3,3,70,1) 35%, rgba(2,0,36,1) 85%);
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
-  top: 0;
-  left: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
   z-index: 9999;
   
   &__text {
@@ -109,33 +119,32 @@ canvas {
   left: 0;
   z-index: 9999;
   transition: opacity .6s ease-out;
-
+  
   &.show {
     display: flex;
     opacity: 1;
   }
-
+  
   &__wrapp {
     width: 100%;
     max-width: 280px;
     padding: 20px;
     background: #ffffff;
     border-radius: 10px;
-    display: flex;
     flex-direction: column;
   }
-
+  
   &__text, &__info {
     margin: 10px;
     text-align: center;
   }
-
+  
   &__input {
     width: 100%;
     padding: 5px;
     border-radius: 10px;
   }
-
+  
   &__btn {
     width: 100%;
     margin: 10px 0 0;
@@ -147,8 +156,9 @@ canvas {
     display: table;
     cursor: pointer;
   }
-
+  
   &__top-scores {
+    display: none;
     th {
       padding: 4px;
       font-size: 12px;
@@ -169,6 +179,5 @@ canvas {
   
   &__top-list {
     width: 100%;
-    display: none;
   }
 }

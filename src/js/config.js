@@ -20,7 +20,7 @@ export const assets = {
 export const getGameData = () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const canvas = document.querySelector('.game');
-    let gameHeight = isMobile ? Math.max(screen.width, screen.height) : Math.min(innerWidth, innerHeight);
+    let gameHeight = isMobile ? Math.max(canvas.offsetWidth, canvas.offsetHeight) : Math.min(canvas.offsetWidth, canvas.offsetHeight);
     canvas.width = Math.round(gameHeight * 1.77);
     canvas.height = gameHeight;
 
