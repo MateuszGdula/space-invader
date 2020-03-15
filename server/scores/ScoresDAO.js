@@ -1,22 +1,25 @@
 'use strict';
+const MongoClient = require('mongodb').MongoClient;
 const logger = require('../modules/logger/logger');
 let scores;
 
 class ScoresDAO {
 
-    /**
-     * 
-     * @param {Object} dbConn reference to the connected DB
-     * @param {String} dbName the name of the DB
-     */
-    static async getCollections(dbConn, dbName) {
+    static async connectDB() {
+        if (scores) return;
+
         try {
-            scores = await dbConn.db(dbName).collection('scores');
-            logger("Got scores collection in scores-dao");
+            const dbConnection = await MongoClient.connect(process.env.CONN_STRING, {
+                //connection settings
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+            })
+            scores = await dbConnection.db(process.env.DB_NAME).collection('scores');
+            logger("ScoresDAO connected successfuly");
             return;
         } catch(e) {
-            logger(`Error on getting scores colletion: ${e.message}`);
-            return;
+            await logger(`Error on DB connection: ${e}`);
+            process.exit(1);
         }
     }
 

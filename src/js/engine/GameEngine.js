@@ -161,6 +161,11 @@ class GameEngine extends EventTarget {
         SI_GAME.data.canvas.classList.add('game-over');
         let message = new ScreenMessage(this.ctx, 'You finished all stages!', 10, SI_GAME.objects.gameOverMessage);
         message.draw();
+        setTimeout(() => {
+            const e = new Event('gameover');
+            e.headerText = 'You finished all stages!';
+            this.dispatchEvent(e)
+        }, 1500);
     }
 
     handleAlienExplosion(e) {

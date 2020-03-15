@@ -98,7 +98,7 @@ const stage3 = {
       number: 3,
       chaser: true
     },
-    69: {
+    82: {
         type: "endGame"
     }
   };
