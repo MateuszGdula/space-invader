@@ -156,7 +156,8 @@ class SpaceInvader {
 
   async submitScore(e) {
     e.preventDefault();
-    if(!this.scorePopInput.value) return;
+    if(!this.scorePopInput.value) return this.scorePopInput.classList.add('error');
+    this.scorePopInput.classList.remove('error');
 
     const data = {};
     data.name = this.scorePopInput.value;
@@ -180,11 +181,11 @@ class SpaceInvader {
   renderTopScores({topPlayers}) {
     let topScores = '<tr><th>Name</td><th>Score</td></tr>';
     topPlayers.forEach(player => {
-      topScores += `<tr><td>${player.name}</td><td>${player.score}</td></tr>`
+      topScores += `<tr><td>${player.name}</td><td>${player.score}</td></tr>`;
     });
     this.bestScores.innerHTML = topScores;
     this.scoreForm.style.display = 'none';
-    this.bestScoresWrapper.style.display = 'flex';
+    this.bestScoresWrapper.style.display = 'block';
   }
 
   closeSubmitPop(e) {
